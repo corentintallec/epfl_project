@@ -7,5 +7,5 @@ y = [2;
 
 alpha = 0.1;
 
-leastSquaresGD(y,tX,alpha)
+ridgeRegression(y,tX,0.1)
 
