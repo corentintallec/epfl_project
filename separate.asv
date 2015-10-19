@@ -1,0 +1,7 @@
+function [ sign ] = separate( beta, tX, tY )
+%SEPARATE Summary of this function goes here
+%   Detailed explanation goes here
+    sign = 
+
+end
+
