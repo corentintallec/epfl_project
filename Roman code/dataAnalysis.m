@@ -3,16 +3,17 @@ clear all;
 load('Rome_regression.mat');
 
 % plot data histogram
-figure(1);
-hist(y_train,100);
-title('y train')
+%figure(1);
+%hist(y_train,100);
+%title('y train')
 
 % plot all X dimensions
-figure(2);
-for i = 1:77
-    subplot(10,8,i);
-    hist(X_train(:,i),100);
-end
+%figure(2);
+%for i = 1:77
+%    subplot(10,8,i);
+%    hist(X_train(:,i),100);
+%end
+    
 
 %figure(3);
 %boxplot(X_train(:,:));
@@ -33,8 +34,11 @@ X_train_cleaned = X_train(:,idx_X_train);
 
 % Find outliers
 idxOutliers = [];
-for i = 1:size(X_train_cleaned,2)
-    x = X_train_cleaned(:,i);
+for i = 1:size(X_train,2)
+    if i ~= 66
+       continue;
+    end
+    x = X_train(:,i);
     meanX = mean(x);
     stdX = std(x);
     x_norm = x- meanX;
@@ -42,6 +46,7 @@ for i = 1:size(X_train_cleaned,2)
     idxOutliersCurrent = find(x_norm>3*stdX | x_norm< -3*stdX);
     idxOutliers = union(idxOutliers, idxOutliersCurrent);
 end
+
 
 
 

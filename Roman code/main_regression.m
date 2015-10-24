@@ -16,7 +16,8 @@ meanY = mean(y_train);
 y_train = y_train - meanY;
 stdY = std(y_train);
 y_train = y_train./stdY;    
- 
+
+
 % split data in K fold (we will only create indices)
 setSeed(1);
 K = 4;
@@ -27,7 +28,24 @@ for k = 1:K
 	idxCV(k,:) = idx(1+(k-1)*Nk:k*Nk);
 end
 
-% K-fold cross validation
+
+%% Feature engineering
+% Binary data [0,1]: idx = 9,39,58,61
+idx_zero = [9 39 58 61];
+% Classes [0,2] : idx = 73
+% Classes [1,2] : idx = 3, 47
+% Classes [0, 2, 1] : idx = 2, 57, 67
+% Classes [0, 1, 2, 3] : idx = 7, 12
+idx_classes = [73 3 47 2 57 67 7 12];
+
+% Clean classified data
+idx_X_train = 1:size(X_train,2);
+idx_X_train([idx_zero idx_classes]) = [];
+X_train_1 = X_train(:,idx_X_train);
+
+X_train(:,66) = X_train(:,66).^2;
+
+%% K-fold cross validation
 for k = 1:K
     % get k'th subgroup in test, others in train
 	idxTe = idxCV(k,:);
@@ -46,20 +64,17 @@ for k = 1:K
     beta = leastSquares(yTr, tXTr);
 
     % training and test MSE
-    mseTrSub(k) = computeCost(yTr,tXTr,beta);
+    rmseTrSub(k) = rmse(yTr,tXTr*beta);
 		
 	% testing MSE using least squares
-	mseTeSub(k) = computeCost(yTe, tXTe, beta); 
+	rmseTeSub(k) = rmse(yTe,tXTe*beta); 
 end
 
-mseTr = mean(mseTrSub);
-mseTe = mean(mseTeSub);
-
-rmseTr = sqrt(mseTr)
-rmseTe = sqrt(mseTe)
+rmseTr = mean(rmseTrSub);
+rmseTe = mean(rmseTeSub);
 
 fprintf('MSE Train: ');
-mseTr
+rmseTr
 fprintf('MSE Test: ');
-mseTe
+rmseTe
 
