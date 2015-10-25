@@ -24,7 +24,7 @@ m = length(y); % number of data vectors
      L = (1/m).* sum(-y.*sigmoid(tX*beta)-(1-y).*(1 - sigmoid(tX*beta)));
      
      % Calculate beta
-     beta = beta - H\g;
+     beta = beta - alpha*H\g;
           
  end
 
