@@ -22,7 +22,11 @@ for i = 1:maxIter
      L = (1/m).* sum(-y.*sigmoid(tX*beta)-(1-y).*(1 - sigmoid(tX*beta))); 
      
      % Calculate beta
+<<<<<<< HEAD
      beta = beta - alpha.*H\g;
+=======
+     beta = beta - alpha*H\g;
+>>>>>>> 195ef5f8e92334829e53f06bd62df7d21f05ee78
      
      % Check convergence
      gradinent = g'*g

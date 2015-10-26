@@ -1,0 +1,23 @@
+data = load('Rome_classification');
+
+tX = data.X_train;
+tX = normalize(tX);
+
+tY = data.y_train;
+
+alpha = 0.1;
+
+beta = logisticRegression(tY,tX,alpha);
+
+ypred = sigmoid(tX*beta)>0.5;
+
+tX1 = tX(ypred == 1,:);
+
+tX2 = tX(ypred == 0,:);
+
+scatter(tX1(:,1),tY);
+
+hold on
+
+scatter(tX2(:,1),tY);
+

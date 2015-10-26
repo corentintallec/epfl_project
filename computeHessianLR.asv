@@ -1,0 +1,9 @@
+function [ H ] = computeHessianLR( tY,tX,beta )
+%COMPUTEHESSIANLR Summary of this function goes here
+%   Detailed explanation goes here
+    ybar = sigmoid(tX*beta
+    S = sigmoid(tX*beta).* (1. - sigmoid(tX*beta))
+    H = tX' * 
+
+end
+
