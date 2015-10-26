@@ -52,7 +52,7 @@ for k = 1:1
     tXTe = [ones(length(yTe), 1) XTe];
 	
     % Logistic regression training
-    beta = logisticRegression(yTr, tXTr, 1);
+    beta = penLogisticRegression(yTr, tXTr,0.1,10000);
     
     % Make prediction 
     yTrPred = predClass(tXTr,beta);
