@@ -31,7 +31,7 @@ disp('OK!');
 % testing ridge regression
 disp('ridge regression...');
 lambda = 1e-5;
-tBeta = ridgeRegression(y, tX, lambda);
+tBeta = ridgeRegressionR(y, tX, lambda);
 assert(all(abs(tBeta - beta) < eps));
 disp('OK!');
 
@@ -41,7 +41,7 @@ y = (y>0);
 % testing logistic regression
 disp('logistic regression...');
 alpha = 1e-3;
-tBeta = logisticRegression(y,tX,alpha);
+tBeta = logisticRegressionR(y,tX,alpha);
 tY = 1.0 ./ (1.0 + exp(-tX * tBeta)) > 0.5;
 assert(sum(tY ~= y) / size(y,1) < 0.2);
 disp('OK!');

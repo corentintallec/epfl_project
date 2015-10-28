@@ -5,7 +5,7 @@ tX = normalize(tX);
 
 tY = data.y_train;
 
-alpha = 0.00001;
+alpha = 0.07;
 
 beta = logisticRegression(tY,tX,alpha);
 

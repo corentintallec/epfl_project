@@ -1,32 +1,31 @@
 function beta = logisticRegression(y,tX,alpha)
 %Logistic regression using Newton's method.
 
-maxIter = 3; % number of iteration
+maxIter = 10; % number of iteration
 beta = zeros(size(tX,2),1); % initialize beta
-convergence = 1e-5; % convergence threshold
+%beta = randn(size(tX,2),size(y,2));
+convergence = 1.0e-05; % convergence threshold
 m = length(y); % number of data vectors
 
- for i = 1:maxIter
-     
+for i = 1:maxIter
      % Calculate gradient
-     g = (1/m).*tX'*(sigmoid(tX*beta)-y);
-     
+     g = 1./m * tX' *(sigmoid(tX*beta) - y);
+          
      % Calculate Hessian
-     S = diag(sigmoid(tX*beta).*(1-sigmoid(tX*beta)));
-     %H = (1/m).* tX'*S*tX;
-     H = (1/m).*tX'*S*tX;
-     
+     ybar = sigmoid(tX*beta);
+     S = ybar .* (1. - ybar) + 1e-5;
+     H = 1/m * tX' * diag(S) * tX;
+              
      % Check convergence
-     gradient = g'*g
-     if g'*g < convergence; break; end
+     if g'*g < convergence; break; end;
      
      % Calculate cost function for debugging
-     L = (1/m).* sum(-y.*sigmoid(tX*beta)-(1-y).*(1 - sigmoid(tX*beta)));
-     
-     % Calculate beta
-     beta = beta - alpha*H\g;
+     L =  -1/m *( y'*tX*beta - sum(log(1 + exp(tX*beta))) );
           
- end
-
+     % Calculate beta
+     beta = beta - alpha.*H\g;
+end
+L
+i
 end
 

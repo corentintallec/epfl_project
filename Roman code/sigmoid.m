@@ -1,5 +1,5 @@
-function h = sigmoid(x)
+function s = sigmoid(x)
 % Sigmoid function
-    h =1.0 ./(1.0 + exp(-x));
+    s = 1./(1 + exp(-x));
 end
 
