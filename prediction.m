@@ -8,9 +8,15 @@ for i=1:nsample
     xTr = xTr(A,:);
     yTr = yTr(A,:);
     [teErr,trErr] = kFold(yTr,xTr,k,@(y,x) ridgeRegression(y,x,lambda),@computeCostLS);
-    teErrs(i,1) = teErr;
+    teErrs(i,1) = teErr*ystd;
 end
-hist(teErrs);
+mean(teErrs)
+std(teErrs)
 
 beta = ridgeRegression(yTr,xTr,lambda);
-pred = xTe*beta*ystd + ymean
+pred = xTe*beta*ystd + ymean;
+teerror = ['rmse', num2str(mean(teErrs))];
+
+f = fopen('test_errors_regression.csv','wt')
+fprintf(f,strcat('rmse,',num2str(mean(teErrs))));
+csvwrite('predictions_regression.csv',pred);
