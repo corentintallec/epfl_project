@@ -3,6 +3,6 @@ function cost = computeCostLS( y,tX,beta )
 %   Detailed explanation goes here
     e = y - tX*beta;
     N = size(y,1);
-    cost = e'*e/(2*N);
+    cost = sqrt(e'*e/(2*N));
 end
 

@@ -25,9 +25,23 @@ for n=1:nsample
     tryTr = tryTr(A,:);
 end
 
-boxplot(trerrs,'plotstyle','compact');
+figure(1);
+boxplot(trerrs,'plotstyle','compact',...
+    'symbol','k.',...
+    'medianstyle','line');
 hold on;
-boxplot(teerrs,'plotstyle','compact','colors','r');
+boxplot(teerrs,'plotstyle','compact',...
+    'symbol','k.',...
+    'medianstyle','line','colors','r');
 hold off;
-ylim([0.03,0.07]);
+
+ylim([0.15 0.3]);
+
+hx = xlabel('Train data proportion');
+hy = ylabel('RMSE');
+
+% the following code makes the plot look nice and increase font size etc.
+set(gca,'fontsize',20,'fontname','Helvetica','box','off','tickdir','out','ticklength',[.02 .02],'xcolor',0.5*[1 1 1],'ycolor',0.5*[1 1 1]);
+set([hx; hy],'fontsize',18,'fontname','avantgarde','color',[.3 .3 .3]);
+grid on;
         
