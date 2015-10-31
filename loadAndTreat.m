@@ -1,0 +1,46 @@
+data = load('Rome_regression.mat');
+
+option = 'poly';
+
+xTr = data.X_train;
+yTr = data.y_train;
+xTe = data.X_test;
+
+switch option
+    case 'poly'
+        degree = 10;
+        x49 = xTr(:,49);
+        x66 = xTr(:,66);
+        tex49 = xTe(:,49);
+        tex66 = xTe(:,66);
+        xTr = [];
+        xTe = [];
+        for k=1:degree
+            xTr = [xTr x49.^k];
+            xTr = [xTr x66.^k];
+            xTe = [xTe tex49.^k];
+            xTe = [xTe tex66.^k];
+        end
+    otherwise
+        catf = [2 3 7 12 47 57 61 67 73];
+        catnf = [3 3 4 4 3 4 4 3 3];
+
+        xcat = xTr(:,catf);
+        texcat = xTe(:,catf);
+
+        xTr(:,catf) = [];
+        xTe(:,catf) = [];
+
+        for i=1:size(catf,2)
+            xTr = [xTr getOnehot(xcat(:,i),catnf(i))];
+            xTe = [xTe getOnehot(texcat(:,i),catnf(i))];
+        end
+end
+nf = size(xTr,2);
+xstd = std(xTr,1);
+xmean = mean(xTr,1);
+ystd = std(yTr,1);
+ymean = mean(yTr,1);
+xTr = normalize(xTr);
+yTr = normalize(yTr);
+xTe = normalize(xTe);

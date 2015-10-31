@@ -1,0 +1,13 @@
+run('loadAndTreat');
+
+nlambda = 500;
+lambda = logspace(-4,3,nlambda);
+option = 'kFold';
+trErs = [];
+teErs = [];
+k = 4;
+
+for j=1:nlambda
+    teEr,trEr = kFold(tY,tX,k,@(y,x) ridgeRegression(tY,tX,lambda(j)),@computeCostLS);
+    trErs = [trErs trEr
+end

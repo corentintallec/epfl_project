@@ -1,0 +1,13 @@
+run('loadAndTreat');
+nsample = 30;
+lambda = 1e-6;
+k = 4;
+for i=1:nsample
+    
+    A = randperm(size(xTr));
+    xTr = xTr(A,:);
+    yTr = yTr(A,:);
+    kFold(xTr,yTr,k,@
+
+beta = ridgeRegression(yTr,xTr,lambda);
+pred = xTe*beta*ystd + ymean

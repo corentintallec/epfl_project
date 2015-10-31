@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.13)  27 OCT 2015 21:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.13)  31 OCT 2015 15:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -401,80 +401,85 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 Missing character: There is no Â in font ptmr7t!
 Missing character: There is no   in font ptmr7t!
 
-<figures/boxplot.jpg, id=29, 1081.03876pt x 692.5875pt>
+<figures/boxplot.jpg, id=29, 881.2925pt x 564.1075pt>
 File: figures/boxplot.jpg Graphic file (type jpg)
 
 <use figures/boxplot.jpg>
 Package pdftex.def Info: figures/boxplot.jpg used on input line 91.
-(pdftex.def)             Requested size: 180.67499pt x 115.75153pt.
- <figures/cor1.jpg, id=30, 726.715pt x 568.1225pt>
+(pdftex.def)             Requested size: 180.67499pt x 115.64278pt.
+ <figures/cor1.jpg, id=30, 861.2175pt x 601.24625pt>
 File: figures/cor1.jpg Graphic file (type jpg)
 
 <use figures/cor1.jpg>
 Package pdftex.def Info: figures/cor1.jpg used on input line 94.
-(pdftex.def)             Requested size: 180.67499pt x 141.2414pt.
- <figures/yhist.jpg, id=31, 562.1pt x 421.575pt>
+(pdftex.def)             Requested size: 180.67499pt x 126.137pt.
+ <figures/yhist.jpg, id=31, 759.83875pt x 530.98375pt>
 File: figures/yhist.jpg Graphic file (type jpg)
 
 <use figures/yhist.jpg>
 Package pdftex.def Info: figures/yhist.jpg used on input line 97.
-(pdftex.def)             Requested size: 108.405pt x 81.303pt.
- <figures/xhist49.jpg, id=32, 562.1pt x 421.575pt>
+(pdftex.def)             Requested size: 108.405pt x 75.74698pt.
+ <figures/xhist49.jpg, id=32, 706.64pt x 499.8675pt>
 File: figures/xhist49.jpg Graphic file (type jpg)
 
 <use figures/xhist49.jpg>
 Package pdftex.def Info: figures/xhist49.jpg used on input line 101.
-(pdftex.def)             Requested size: 108.405pt x 81.303pt.
- <figures/xhist66.jpg, id=33, 562.1pt x 421.575pt>
+(pdftex.def)             Requested size: 108.405pt x 76.67778pt.
+ <figures/xhist66.jpg, id=33, 656.4525pt x 493.845pt>
 File: figures/xhist66.jpg Graphic file (type jpg)
 
 <use figures/xhist66.jpg>
 Package pdftex.def Info: figures/xhist66.jpg used on input line 105.
-(pdftex.def)             Requested size: 108.405pt x 81.303pt.
+(pdftex.def)             Requested size: 108.405pt x 81.54872pt.
 
 Underfull \vbox (badness 2591) has occurred while \output is active []
 
  [1
 
-{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \vbox (badness 1383) has occurred while \output is active []
-
- [2 <./figures/boxplot.jpg> <./figures/cor1.jpg> <./figures/yhist.jpg> <./figur
-es/xhist49.jpg> <./figures/xhist66.jpg>]
-<figures/traintestRMSE.jpg, id=64, 690.58pt x 589.20125pt>
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./f
+igures/boxplot.jpg> <./figures/cor1.jpg> <./figures/yhist.jpg> <./figures/xhist
+49.jpg> <./figures/xhist66.jpg>]
+<figures/traintestRMSE.jpg, id=64, 828.09375pt x 630.355pt>
 File: figures/traintestRMSE.jpg Graphic file (type jpg)
 
 <use figures/traintestRMSE.jpg>
 Package pdftex.def Info: figures/traintestRMSE.jpg used on input line 163.
-(pdftex.def)             Requested size: 180.67499pt x 154.15068pt.
+(pdftex.def)             Requested size: 180.67499pt x 137.53394pt.
 
-<figures/traintestRMSEpoly.jpg, id=65, 930.47626pt x 683.55376pt>
+<figures/traintestRMSEpoly.jpg, id=65, 846.16125pt x 635.37375pt>
 File: figures/traintestRMSEpoly.jpg Graphic file (type jpg)
 
 <use figures/traintestRMSEpoly.jpg>
 Package pdftex.def Info: figures/traintestRMSEpoly.jpg used on input line 167.
-(pdftex.def)             Requested size: 180.67499pt x 132.724pt.
+(pdftex.def)             Requested size: 180.67499pt x 135.66228pt.
 
-<figures/learningcurves.jpg, id=66, 810.02625pt x 604.50844pt>
+<figures/learningcurves.jpg, id=66, 876.27374pt x 619.31375pt>
 File: figures/learningcurves.jpg Graphic file (type jpg)
 
 <use figures/learningcurves.jpg>
 Package pdftex.def Info: figures/learningcurves.jpg used on input line 170.
-(pdftex.def)             Requested size: 289.07999pt x 215.74117pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 175.
+(pdftex.def)             Requested size: 289.07999pt x 204.30801pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 180.
  [3 <./figures/traintestRMSE.jpg> <./figures/traintestRMSEpoly.jpg> <./figures/
 learningcurves.jpg>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 175.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
  (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 175.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 175.
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: ABD7EB979E9AEC990BE0A31451B34BCB;334.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 175.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
+
+
+Package rerunfilecheck Warning: File `paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `paper.out':
+(rerunfilecheck)             Before: ABD7EB979E9AEC990BE0A31451B34BCB;334
+(rerunfilecheck)             After:  5FB14E2A768BF8EAEAC01EFD43C9E971;401.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 180.
  ) 
 Here is how much of TeX's memory you used:
- 6969 strings out of 493315
- 99603 string characters out of 6137903
+ 6970 strings out of 493315
+ 99617 string characters out of 6137903
  191581 words of memory out of 5000000
  10293 multiletter control sequences out of 15000+600000
  20116 words of font info for 54 fonts, out of 8000000 for 9000
@@ -493,10 +498,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/texmf
 -dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2013/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb>
-Output written on paper.pdf (3 pages, 552406 bytes).
+Output written on paper.pdf (3 pages, 452975 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 95 compressed objects within 1 object stream
- 19 named destinations out of 1000 (max. 500000)
+ 122 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
+ 20 named destinations out of 1000 (max. 500000)
  81 words of extra memory for PDF output out of 10000 (max. 10000000)
 
