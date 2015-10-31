@@ -118,7 +118,7 @@ The lambda we used ranged from $10^{-4}$ to
 $10^3$, with 500 points. The results of the ridge regression are already
 satisfactory, with an error of approximately $0.32\pm0.005$ on the training set
 and $0.34\pm0.005$ on the test set, that is approximately one third of the
-variance of the output variable.
+standard deviation of the output variable.
 
 We see that for sufficiently low lambda, both the training and test errors do
 not vary much (there is indeed only a very slight variation of test RMSE, with a
@@ -154,7 +154,7 @@ error as functions of the proportion of data used to train. The results are
 summarized in Figure \ref{fig:learningCurve}. 
 
 As expected, both training error and test error decrease as the proportion of
-training data increases. The test error obtained seems to exhibit a quit
+training data increases. The test error obtained seems to exhibit a quite
 satisfactory behaviour.
 
 \begin{figure}[!h]
@@ -171,5 +171,10 @@ data.]{\includegraphics[width=4in]{figures/learningcurves.jpg}
 \caption{}
 \end{figure}
 
+\subsection{Regression Summary}
+While simple ridge regression with an appropriately optimized lambda already
+gave decent results on our dataset, we obtained better results using polynomial
+transformations of well chosen features. Doing so, we obtain an error that is
+approximately one fifth of the standard deviation.
 
 \end{document}

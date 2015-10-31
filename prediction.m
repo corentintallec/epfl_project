@@ -11,8 +11,7 @@ for i=1:nsample
     teErrs(i,1) = teErr*ystd;
 end
 mean(teErrs)
-std(teErrs)
-
+ystd
 beta = ridgeRegression(yTr,xTr,lambda);
 pred = xTe*beta*ystd + ymean;
 teerror = ['rmse', num2str(mean(teErrs))];
