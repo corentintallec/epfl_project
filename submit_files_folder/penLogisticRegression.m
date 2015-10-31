@@ -2,12 +2,11 @@ function beta = penLogisticRegression(y, tX, alpha, lambda)
 % Penalized logistic regression using Newton's method
 % lambda is the regularization parameter
 
-maxIter = 200; % number of iteration
+maxIter = 1000; % number of iteration
 beta = zeros(size(tX,2),1); % initialize beta
 convergence = 1e-5; % convergence threshold
 m = size(y,1); % number of data vectors
 for i = 1:maxIter
-     
      % Calculate gradient
      g = 1./m * tX' *(sigmoid(tX*beta) - y);
      
@@ -21,12 +20,11 @@ for i = 1:maxIter
      % Check convergence
      if g'*g < convergence; break; end;
      
-     % Calculate cost function for debugging
+     % Calculate cost function 
      %L =  -1/m *( y'*tX*beta - sum(log(1 + exp(tX*beta))) );
      
      % Calculate beta
      beta = beta - alpha.*H\g;
 end
-
 end
 

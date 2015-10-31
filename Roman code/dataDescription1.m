@@ -4,8 +4,14 @@ load('Rome_classification.mat');
 
 %% Plot y histogramm
 figure(1);
-hist(y_train,100);
-
+xbins2 = [-2 -1 0 1 2];
+hist(y_train, xbins2);
+hy = ylabel('Frequency');
+hx = xlabel('y');
+set(gca,'fontsize',20,'fontname','Helvetica','box','off','tickdir','out','ticklength',[.02 .02],'xcolor',0.5*[1 1 1],'ycolor',0.5*[1 1 1]);
+set([hx; hy],'fontsize',18,'fontname','avantgarde','color',[.3 .3 .3]);
+grid on;
+print('HistX','-dpng')
 %% Plot X_train histograms
 figure(2);
 for i = 1:size(X_train,2)
@@ -27,13 +33,13 @@ end
 
 %% Plot boxplot
 figure(4);
-subplot(2,1,1);
 boxplot(X_train);
-title('As-is data');
-subplot(2,1,2);
-X = normalize(X_train);
-boxplot(normalize(X_train));
-title('Normalized data');
+hy = ylabel('');
+hx = xlabel('X input variables');
+set(gca,'fontsize',12,'fontname','Helvetica','box','off','tickdir','out','ticklength',[.02 .02],'xcolor',0.5*[1 1 1],'ycolor',0.5*[1 1 1]);
+set([hx; hy],'fontsize',12,'fontname','avantgarde','color',[.3 .3 .3]);
+grid on;
+print('boxplotX','-dpng')
 
 
 

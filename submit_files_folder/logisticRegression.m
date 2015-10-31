@@ -1,9 +1,8 @@
 function beta = logisticRegression(y,tX,alpha)
 %Logistic regression using Newton's method.
 
-maxIter = 10; % number of iteration
+maxIter = 1000; % number of iteration
 beta = zeros(size(tX,2),1); % initialize beta
-%beta = randn(size(tX,2),size(y,2));
 convergence = 1.0e-05; % convergence threshold
 m = length(y); % number of data vectors
 
@@ -25,7 +24,5 @@ for i = 1:maxIter
      % Calculate beta
      beta = beta - alpha.*g;
 end
-L
-i
 end
 

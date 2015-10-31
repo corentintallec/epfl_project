@@ -3,8 +3,18 @@ load('Rome_classification');
 
 % Parameters
 alpha = 1.0;
+%% Dummy encoding
+classifiedFeatures = [3 16 25 28 34];
+classifiedRows = [];
+for i = 1:length(classifiedFeatures)
+    classifiedRows = [classifiedRows dummyvar(X_train(:,classifiedFeatures(i)))];
+end
+X_train(:,classifiedFeatures) = [];
+X_train = [X_train classifiedRows];
 
-X = normalize(X_train);
+X = poly(X_train,3);
+X = normalize(X);
+
 y_train(y_train == -1) = 0; 
 
 %% split data in K fold (we will only create indices)
@@ -17,16 +27,9 @@ for k = 1:K
     idxCV(k,:) = idx(1+(k-1)*Nk:k*Nk);
 end
 
-%% Features engineering
-X = normalize(X_train);
-classifiedFeatures = [3 16 25 28 34];
-
-X = poly(X,3);
-X = normalize(X);
-
 %% K-fold cross validation
 tic
-lambdas = logspace(-4,2,100);
+lambdas = logspace(-3,4,100);
 for i = 1:length(lambdas)
     % K-fold cross validation
     for k = 1:K
@@ -46,33 +49,52 @@ for i = 1:length(lambdas)
         % Prediction
         trPr = sigmoid(tXTr*beta);
         tePr = sigmoid(tXTe*beta);
-        %trBin(trPr > 0.5) = 1;
-        %teBin(tePr > 0.5) = 1;
+        trBin = +(trPr >= 0.5);
+        teBin = +(tePr >= 0.5);
 
         % Error calculation
         rmseTrK(k) = rmse(yTr, trPr);
         rmseTeK(k) = rmse(yTe, tePr);
+        binLossTrK(k) = binLoss(yTr, trBin);
+        binLossTeK(k) = binLoss(yTe, teBin);
     end
 
     % Mean error calculation
     rmseTr(i) = mean(rmseTrK);
     rmseTe(i) = mean(rmseTeK);
+    binLossTr(i) = mean(binLossTrK);
+    binLossTe(i) = mean(binLossTeK);
 end
 toc
 %% Error calculation
+% figure(1);
+% subplot(2,1,1);
+% semilogx(lambdas, rmseTr,'color','b', 'LineWidth',2);
+% ylabel('Train RMSE','fontsize',12,'fontname','Helvetica')
+% xlabel('lambda','fontsize',12,'fontname','Helvetica')
+% grid on;
+% subplot(2,1,2);
+% semilogx(lambdas, rmseTe,'color','r', 'LineWidth',2);
+% ylabel('Test RMSE','fontsize',12,'fontname','Helvetica')
+% xlabel('lambda','fontsize',12,'fontname','Helvetica')
+% grid on;
+
 figure(1);
 subplot(2,1,1);
-semilogx(lambdas, rmseTr,'color','b', 'LineWidth',2);
-ylabel('Train RMSE','fontsize',12,'fontname','Helvetica')
-xlabel('lambda','fontsize',12,'fontname','Helvetica')
+semilogx(lambdas, binLossTr,'color','b', 'LineWidth',2);
+hy = ylabel('Train 0-1 Loss');
+hx = xlabel('lambda');
+set(gca,'fontsize',12,'fontname','Helvetica','box','off','tickdir','out','ticklength',[.02 .02],'xcolor',0.5*[1 1 1],'ycolor',0.5*[1 1 1]);
+set([hx; hy],'fontsize',12,'fontname','avantgarde','color',[.3 .3 .3]);
 grid on;
 subplot(2,1,2);
-semilogx(lambdas, rmseTe,'color','r', 'LineWidth',2);
-ylabel('Test RMSE','fontsize',12,'fontname','Helvetica')
-xlabel('lambda','fontsize',12,'fontname','Helvetica')
+semilogx(lambdas, binLossTe,'color','r', 'LineWidth',2);
+hy = ylabel('Test 0-1 Loss');
+hx = xlabel('lambda');
+set(gca,'fontsize',12,'fontname','Helvetica','box','off','tickdir','out','ticklength',[.02 .02],'xcolor',0.5*[1 1 1],'ycolor',0.5*[1 1 1]);
+set([hx; hy],'fontsize',12,'fontname','avantgarde','color',[.3 .3 .3]);
 grid on;
-%binLoss = binLoss(y_train, y_predicted_bin);
-%logLoss = logLoss(y_train, y_predicted);
 
+print('pen_lambda_poly','-dpng')
 
 
