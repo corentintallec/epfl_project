@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.13)  31 OCT 2015 15:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.13)  1 NOV 2015 11:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -398,34 +398,32 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 41.
-Missing character: There is no Â in font ptmr7t!
-Missing character: There is no   in font ptmr7t!
 
-<figures/boxplot.jpg, id=29, 881.2925pt x 564.1075pt>
+<figures/boxplot.jpg, id=61, 881.2925pt x 564.1075pt>
 File: figures/boxplot.jpg Graphic file (type jpg)
 
 <use figures/boxplot.jpg>
 Package pdftex.def Info: figures/boxplot.jpg used on input line 91.
 (pdftex.def)             Requested size: 180.67499pt x 115.64278pt.
- <figures/cor1.jpg, id=30, 861.2175pt x 601.24625pt>
+ <figures/cor1.jpg, id=62, 861.2175pt x 601.24625pt>
 File: figures/cor1.jpg Graphic file (type jpg)
 
 <use figures/cor1.jpg>
 Package pdftex.def Info: figures/cor1.jpg used on input line 94.
 (pdftex.def)             Requested size: 180.67499pt x 126.137pt.
- <figures/yhist.jpg, id=31, 759.83875pt x 530.98375pt>
+ <figures/yhist.jpg, id=63, 759.83875pt x 530.98375pt>
 File: figures/yhist.jpg Graphic file (type jpg)
 
 <use figures/yhist.jpg>
 Package pdftex.def Info: figures/yhist.jpg used on input line 97.
 (pdftex.def)             Requested size: 108.405pt x 75.74698pt.
- <figures/xhist49.jpg, id=32, 706.64pt x 499.8675pt>
+ <figures/xhist49.jpg, id=64, 706.64pt x 499.8675pt>
 File: figures/xhist49.jpg Graphic file (type jpg)
 
 <use figures/xhist49.jpg>
 Package pdftex.def Info: figures/xhist49.jpg used on input line 101.
 (pdftex.def)             Requested size: 108.405pt x 76.67778pt.
- <figures/xhist66.jpg, id=33, 656.4525pt x 493.845pt>
+ <figures/xhist66.jpg, id=65, 656.4525pt x 493.845pt>
 File: figures/xhist66.jpg Graphic file (type jpg)
 
 <use figures/xhist66.jpg>
@@ -439,52 +437,81 @@ Underfull \vbox (badness 2591) has occurred while \output is active []
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./f
 igures/boxplot.jpg> <./figures/cor1.jpg> <./figures/yhist.jpg> <./figures/xhist
 49.jpg> <./figures/xhist66.jpg>]
-<figures/traintestRMSE.jpg, id=64, 828.09375pt x 630.355pt>
+<figures/traintestRMSE.jpg, id=96, 828.09375pt x 630.355pt>
 File: figures/traintestRMSE.jpg Graphic file (type jpg)
 
 <use figures/traintestRMSE.jpg>
 Package pdftex.def Info: figures/traintestRMSE.jpg used on input line 163.
 (pdftex.def)             Requested size: 180.67499pt x 137.53394pt.
 
-<figures/traintestRMSEpoly.jpg, id=65, 846.16125pt x 635.37375pt>
+<figures/traintestRMSEpoly.jpg, id=97, 846.16125pt x 635.37375pt>
 File: figures/traintestRMSEpoly.jpg Graphic file (type jpg)
 
 <use figures/traintestRMSEpoly.jpg>
 Package pdftex.def Info: figures/traintestRMSEpoly.jpg used on input line 167.
 (pdftex.def)             Requested size: 180.67499pt x 135.66228pt.
 
-<figures/learningcurves.jpg, id=66, 876.27374pt x 619.31375pt>
+<figures/learningcurves.jpg, id=98, 657.2053pt x 464.4853pt>
 File: figures/learningcurves.jpg Graphic file (type jpg)
 
 <use figures/learningcurves.jpg>
 Package pdftex.def Info: figures/learningcurves.jpg used on input line 170.
-(pdftex.def)             Requested size: 289.07999pt x 204.30801pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 180.
+(pdftex.def)             Requested size: 289.07999pt x 204.31038pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [3 <./figures/traintestRMSE.jpg> <./figures/traintestRMSEpoly.jpg> <./figures/
-learningcurves.jpg>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
+learningcurves.jpg>] <figures/HistY.png, id=109, 578.16pt x 433.62pt>
+File: figures/HistY.png Graphic file (type png)
+
+<use figures/HistY.png>
+Package pdftex.def Info: figures/HistY.png used on input line 208.
+(pdftex.def)             Requested size: 144.54pt x 108.40472pt.
+ <figures/boxplotX.png, id=110, 578.16pt x 433.62pt>
+File: figures/boxplotX.png Graphic file (type png)
+
+<use figures/boxplotX.png>
+Package pdftex.def Info: figures/boxplotX.png used on input line 209.
+(pdftex.def)             Requested size: 238.49121pt x 178.86383pt.
+ [4 <./figures/HistY.png (PNG copy)> <./figures/boxplotX.png (PNG copy)>] <figu
+res/pen_lambda.png, id=122, 578.16pt x 433.62pt>
+File: figures/pen_lambda.png Graphic file (type png)
+
+<use figures/pen_lambda.png>
+Package pdftex.def Info: figures/pen_lambda.png used on input line 240.
+(pdftex.def)             Requested size: 194.40646pt x 145.8012pt.
+
+<figures/pen_lambda_poly.png, id=123, 578.16pt x 433.62pt>
+File: figures/pen_lambda_poly.png Graphic file (type png)
+
+<use figures/pen_lambda_poly.png>
+Package pdftex.def Info: figures/pen_lambda_poly.png used on input line 241.
+(pdftex.def)             Requested size: 194.40646pt x 145.8012pt.
+
+Underfull \hbox (badness 2310) in paragraph at lines 252--254
+[]\OT1/ptm/m/n/10 All the scripts that were used can be find on the web-page: [
+]$\OT1/pcr/m/n/10 https : \github . com /
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 261.
+[5 <./figures/pen_lambda.png (PNG copy)> <./figures/pen_lambda_poly.png (PNG co
+py)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 261.
  (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
-
-
-Package rerunfilecheck Warning: File `paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: ABD7EB979E9AEC990BE0A31451B34BCB;334
-(rerunfilecheck)             After:  5FB14E2A768BF8EAEAC01EFD43C9E971;401.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 180.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 261.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 261.
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: C64E392441CA4E865E2D840FF1CA891A;845.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 261.
  ) 
 Here is how much of TeX's memory you used:
- 6970 strings out of 493315
- 99617 string characters out of 6137903
- 191581 words of memory out of 5000000
- 10293 multiletter control sequences out of 15000+600000
+ 7022 strings out of 493315
+ 100505 string characters out of 6137903
+ 191932 words of memory out of 5000000
+ 10325 multiletter control sequences out of 15000+600000
  20116 words of font info for 54 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 37i,8n,39p,248b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,8n,39p,248b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/te
 xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texl
@@ -498,10 +525,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013/texmf
 -dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2013/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb>
-Output written on paper.pdf (3 pages, 452975 bytes).
+Output written on paper.pdf (5 pages, 674189 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
- 20 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 181 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

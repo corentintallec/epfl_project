@@ -14,7 +14,7 @@
 \usepackage{ifthen}
 \usepackage{natbib}
 
-\title{Project-I by Group CITYNAME}
+\title{Project-I by Group Rome}
 
 \author{
 Roman Shirochenko\\
@@ -191,9 +191,17 @@ feature number of 47. As the rank of our dataset is below 47 (it is 42), we use 
 Our goal is to produce binary classification predictions for test examples and approximate the test error.
 
 \subsection{Data visualization and cleaning}
-Firstly, the data input $\mathbf{X}$ train and $\mathbf{Y}$ train variables was visualized. The figures are showed in \ref{fig:yTrainClass} and \ref{fig:boxplotXClass}. After plotting this figures, all -1 values were changed on 0 in $\mathbf{Y}$ train and $\mathbf{X}$ train variables were normalized (normalizing the output variable allow us to obtain convergence faster with gradient decent and Newton's method). We tried gradient decent and Newton`s method for Logistic regression and Penalized Logistic Regression  and chose Newton`s method as the execution time was nearly the same, but Newton`s method was converged better than gradient descent method(as we needed to changing alpha parameter too) and with less iterations.
+Firstly, the data input $\mathbf{X}$ train and $\mathbf{Y}$ train variables were
+visualized. The figures are showed in \ref{fig:yTrainClass} and
+\ref{fig:boxplotXClass}. After plotting these figures, all -1 values were
+changed to 0 in $\mathbf{Y}$ train and $\mathbf{X}$ train variables were
+normalized (normalizing the output variable gave us a faster convergence for
+both gradient decent and Newton's method). We tried gradient decent and Newton`s
+method for Logistic regression and Penalized Logistic Regression  and chose
+Newton`s method as the execution time was nearly the same, but Newton`s method
+displayed better convergence than gradient descent method (as we needed to changing alpha parameter too) and with less iterations.
 
-Plotting histogram graphs for each variable in $\mathbf{X}$ train, showed that features have different distributions and mostly do not follow to normal Gaussian distribution.
+Plotting histogram graphs for each variable in $\mathbf{X}$ train, showed that features have different distributions and mostly do not follow normal distribution.
 
 \begin{figure}[!t]
 \center
@@ -204,12 +212,28 @@ Plotting histogram graphs for each variable in $\mathbf{X}$ train, showed that f
 \end{figure}
 
 \subsection{Penalized Logistic regression}
-We applied logistic regression and penalized logistic regression method for dataset. As we have many features, we expected that Penalized Logistic regression will improve test error result for kFold cross-validation with $k=4$ by penalizing some features. But the test 1-0 loss error for both methods was nearly the same and equals $0.183\pm0.001$.The summarized result with lambda in range between $10^{-4}$ to $10^3$  with 100 points presented in the Figure \ref{fig:pen}. 
+We applied logistic regression and penalized logistic regression method on
+ourdataset. As we have many features and as the dataset is rank deficient, we expected that Penalized Logistic
+regression would improve test error result for kFold cross-validation with $k=4$
+by penalizing some features. But the test 1-0 loss error for both methods was
+nearly the same and equals to $0.183\pm0.001$. The summarized result with lambda
+ranging from $10^{-4}$ to $10^3$  with 100 points is presented in the Figure \ref{fig:pen}. 
 
 \subsection{Feature transformation}
-Several features transformations were performed. Features deleting or using only classified features did not improve prediction result. Then we applied polynomial function transformation for each feature. We tried the same approach as with linear regression, we found features with two modes histogram distribution (the hypothesis is that features follow 0 and 1 output result) and use only them with polynomial feature transformation, but it did not improve the error result too.
+Several features transformations were performed. Features deleting or using only
+classified features did not improve prediction result. Then we applied
+polynomial function transformation for each feature. We tried the same approach
+as with linear regression, we found features with two modes histogram
+distribution (the hypothesis is that features follow 0 and 1 output result) and
+use only them with polynomial feature transformation, but it did not improve the
+error resuls.
 
-We compared penalized logistic regression without features engineering results with polynomial transformation. Method with transformation showed better result and gave the 1-0 loss test error result  $0.167\pm0.001$. The lambda parameter in case without feature transformation was chosen equal 0.001 and with feature transformation was chosen equal to 0.3 according to result of a k-fold cross validation procedure with $k=4$ and lambda in range between $10^{-3}$ to $10^4$  with 100 points. The result described here are summarized in the Figure \ref{fig:pen} and \ref{fig:poly_pen}.
+We compared penalized logistic regression without features engineering results
+with polynomial transformation. Method with transformation showed better result
+and gave the 1-0 loss test error result  $0.167\pm0.001$. The lambda parameter
+without feature transformation was chosen to be 0.001 and with feature
+transformation was chosen to be 0.3 according to the results of a k-fold cross
+validation procedure with $k=4$ and lambda ranging from $10^{-3}$ to $10^4$  with 100 points. The result described here are summarized in the Figure \ref{fig:pen} and \ref{fig:poly_pen}.
 
 \begin{figure}[!t]
 \center
@@ -222,7 +246,11 @@ We compared penalized logistic regression without features engineering results w
 \section{Summary}
 We analyzed a regression and classification datasets and that ridge regression and penalized logistic regression are reasonable fit.
 We tried some feature transformation and found that polynomial feature transformation gives us a little improvement in final test error result. 
-We estimate that the average test error for regression problem is $0.115\pm0.001$ on the test set, that is approximately one tenth of the variance of the output variable. The test error for classification problem is $0.167\pm0.001$.
+We estimate that the average test error for regression problem is $0.225\pm0.005$
+on the test set, that is approximately one fifth of the standard deviation of the output variable. The test error for classification problem is $0.167\pm0.001$.
+
+All the scripts that were used can be find on the webpage:
+\url{https:\\github.com/corentintallec/mlproject}
 
 \section{Acknowledgments}
 We would like to thank Emtiyaz Khan and all teacher`s advisers for making the datasets for this project and answering our question during exercise sessions.
