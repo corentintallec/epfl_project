@@ -1,2 +1,5 @@
 References on Kernels: 
 http://lear.inrialpes.fr/people/mairal/teaching/2015-2016/MVA/fichiers/mva_slides.pdf
+
+Paper on Kernel methods and convex optimization:
+https://stanford.edu/~boyd/papers/pdf/kernel_learning_icassp08.pdf
