@@ -9,6 +9,18 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+\newcommand{\x}{x_i}
+\newcommand{\y}{y_i}
+
+\newcommand{\inner}[2]{\langle #1 , #2 \rangle_{\R^d}}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+
 \title{Kernel Methods and SVMs:
 A convex optimization point of view}
 \author{Gael Lederrey\\
@@ -37,34 +49,85 @@ Corentin Tallec}
 \section{Kernel methods}
 \subsection{Generalities}
 
-The kernel methods are used in machine learning for pattern analysis. The support vector machine (SVM) is the best know kernel method. This class of algorithm is used to find and study some types of relations in datasets, {\it e.g.} classifications of the data, correlations between them, etc. For a usual algorithm solving this kind of task, the data needs to be transformed into feature vector representations which can be computationally costly. The kernel methods require only a {\bf kernel}, {\it i.e.} a similarity function between pairs of data, specified by the user. \\
-In the following sections, we will first give the definition of a kernel function, then we will present the feature mapping and finally we will present the idea of the kernel method
+Kernel methods are tools broadly used in various fields, but most notably in
+machine learning and pattern discrimination. Among this class of methods,
+support vector machines are probably the best known kernel method. This class
+of algorithm is used to find and study some types of relations in datasets,
+{\it e.g.} classifications of the data, correlations between them, etc. Many
+machine learning algorithms rely on the idea of embedding the data at hand
+into a vector space that makes it easier analyse. Kernel methods provide
+a quite general framework for doing so, and provide tools to transport data
+into possibly infinite dimensional spaces. Kernel methods rely on a measure
+of similarity between input data known as a {\bf kernel}, which has to be selected
+beforehand.
 
-\subsubsection{Kernel}
+A typical case of application for a kernel method is the following. Define
+$\X$ (resp. $\Y$) as a set of datapoints (resp. a set of labels). Given
+a training set, that is a set of couples $(\x, \y)_{i\leq n} \in (\X \times \Y)^n$,
+we want to find an $f : \X \mapsto \Y$ in a particular set of functions $\F$ such
+that $f$ predicts accurately labels in the training set, and is able to generalize
+to unseen datapoints. One way of doing so is to solve the following optimization
+problem:
+\begin{equation}
+  \min\limits_{f\in\F} \frac{1}{n}\sum\limits_{i=1}^nL(\y,f(\x)) + \lambda\Omega(f)
+\end{equation}
+where $L$ is a cost function, that measure how close $f(\x)$ is to $\y$ for each
+$i$, and $\Omega$ is a regularizing term, that aims at describing the complexity
+of a certain function $f$. In the general case, this optimization problem is not required
+to be convex. Kernel methods provide a set of function $\F$ and a regularizing term
+$\Omega(f)$ such that when the cost function is assumed to be convex, the entire
+problem is convex, and can be easily solved.
 
-First, we denote $\mathcal{X}$ an arbitrary input set and $\mathcal{Y}$ an output set. An input-output pair $(x,y) \in \mathcal{X} \times \mathcal{Y}$ is called an example. A {\bf kernel} is a similarity function between these two sets. It's a real-valued function that quantifies the similarity between the input $x$ and the output $y$. We define the function 
-$K: \mathcal{X}\times\mathcal{X} \mapsto \mathbb{R}$, a {\bf kernel} function if $K$ is symmetric and if it is positive semidefinite: for any $x_1, \ldots, x_m \in \mathcal{X}$, the Gram matrix $G\in \mathbb{R}^{m\times m}$, defined by $G_{ij} = K(x_i,x_j) = K(x_j,x_i) = G_{ji}$, is positive semidefinite.
+In the following sections, kernel functions are defined, as well as their
+relation to the idea of feature mapping, and the general principle of kernel
+methods is exposed.
 
-\subsubsection{Feature Mapping}
+\subsubsection{Positive Definite Kernel}
+\label{subsub:psd}
+Denote by $\X$ an arbitrary input set (notably $\X$ is not required to be a vector
+space). A kernel can be seen as a measure of similarity between two elements of $\X$.
+Formally
+\begin{definition}
+  A positive definite (p.d.) kernel on $\X$ is a function $K:\X\times\X \mapsto \R$ that
+  is symmetric and that satisfies for all $N \in \N$, $(x_1, \dots, x_n) \in \X^N$,
+  $(a_1, \dots, a_N) \in \R^\N$:
+  \begin{equation}
+    \sum\limits_{1 \leq i, j \leq N}a_ia_jK(x_i,x_j) \geq 0.
+  \end{equation}
+\end{definition}
+If $\X = R^d$, the simplest kernel that can be thought of
+is the canonical inner product. It obviously is symmetric, 
+and positivity is easily verified. 
+Under the same assumptions, it can quite easily be shown
+that $K(x, x') = (\inner{x}{x'})^p$ is a kernel too (known
+as the polynomial kernel). Another well known kernel is 
+the gaussian kernel, defined as $K(x, x') = e^{- \frac{\norm{x-y}^2}{2\sigma^2}}$.
+
+\subsubsection{Feature mapping}
 \label{map}
-
-In order to make the computation simpler, the kernel needs to be written in the form of a "feature map". Mercer's theorem (or Aronszajn's theorem) gives the definition of a feature map:
+As seen in Subsection~\ref{subsub:psd}, the canonical inner
+product of a vector space is a kernel. Mercer's theorem provides
+a kind of reciprocal statement: any kernel can be viewed as an
+inner product in a certain hilbert space which is a functional
+space on $\mathcal{X}$.
 \begin{theorem} [Mercer's theorem]
-The function $K$ is a positive definite kernel on the $\mathcal{X}$ if and only if there exists a Hilbert space $\mathcal{H}$ with an inner product $\langle \cdot,\cdot\rangle_{\mathcal{H}}$ and a mapping
-\[
-\phi: \mathcal{X}\mapsto\mathcal{H}
-\]
+The function $K$ is a positive definite kernel on $\mathcal{X}$ if and only
+if there exists a Hilbert space $\mathcal{H}$ with an inner product $\langle
+\cdot,\cdot\rangle_{\mathcal{H}}$ and a mapping
+\begin{equation}
+  \phi: \mathcal{X}\mapsto\mathcal{H}
+\end{equation}
 such that, for any $x$, $x'$ in $\mathcal{X}$:
-\[
-K(x,x') = \langle\phi(x),\phi(x')\rangle_{\mathcal{H}}
-\]
+\begin{equation}
+  K(x,x') = \langle\phi(x),\phi(x')\rangle_{\mathcal{H}}
+\end{equation}
 \end{theorem}
-The function $\phi$ is called the {\bf feature mapping}.
-\\
-In other words, the feature mapping is used to take the data in a space of small dimension $\mathcal{X}$ and map them into a Hilbert space of high dimension (even infinite). We do this because, it will be easier to perform a regression of the data in a space of higher dimension.
+Using a kernel can thus somehow be viewed as embedding the datapoints in
+a (larger) space. One benefit of doing so can be, for example, to simplify
+regression or classification problems, as these problems tend to
+be easier in high dimensional space than in low dimensional ones.
 
-{\color{red} Je devrais peut etre definir ici les RKHS}
-
+\subsubsection{Back to classification}
 \subsubsection{Idea about the Kernel Methods}
 \label{meth}
 The {\bf kernel methods} are using a set of pre-trained data. We can denote them by the pairs of example: $(x_1, y_1), \ldots, (x_n,y_n) \in \mathcal{X} \times \mathcal{Y}$. This means that for all the input $x_i, ~ i=1,\ldots,n$, we know the corresponding result $y_i$. Now, we can add an unlabelled value, let's say $x'$. The kernel function will be used to compare $x'$ with all the pre-trained inputs $x_i$. The kernel will then say if $x'$ is similar to $x_i$ or not. With adding weights for each of the pre-trained examples, an output $\hat{y}$ depending on the unlabelled input $x'$ can be computed. 
