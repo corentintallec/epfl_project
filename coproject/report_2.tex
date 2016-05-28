@@ -1,6 +1,12 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[english]{babel}
 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newtheorem{theorem}{Theorem}
+
 \title{Kernel Methods and SVMs:
 A convex optimization point of view}
 \author{Gael Lederrey\\
@@ -25,10 +31,58 @@ Corentin Tallec}
   we intend to give a more precise treatment of the support vectors
   machines special case.
 \end{abstract}
+
 \section{Kernel methods}
 \subsection{Generalities}
+
+The kernel methods are used in machine learning for pattern analysis. The support vector machine (SVM) is the best know kernel method. This class of algorithm is used to find and study some types of relations in datasets, {\it e.g.} classifications of the data, correlations between them, etc. For a usual algorithm solving this kind of task, the data needs to be transformed into feature vector representations which can be computationally costly. The kernel methods require only a {\bf kernel}, {\it i.e.} a similarity function between pairs of data, specified by the user. \\
+In the following sections, we will first give the definition of a kernel function, then we will present the feature mapping and finally we will present the idea of the kernel method
+
+\subsubsection{Kernel}
+
+First, we denote $\mathcal{X}$ an arbitrary input set and $\mathcal{Y}$ an output set. An input-output pair $(x,y) \in \mathcal{X} \times \mathcal{Y}$ is called an example. A {\bf kernel} is a similarity function between these two sets. It's a real-valued function that quantifies the similarity between the input $x$ and the output $y$. We define the function 
+$K: \mathcal{X}\times\mathcal{X} \mapsto \mathbb{R}$, a {\bf kernel} function if $K$ is symmetric and if it is positive semidefinite: for any $x_1, \ldots, x_m \in \mathcal{X}$, the Gram matrix $G\in \mathbb{R}^{m\times m}$, defined by $G_{ij} = K(x_i,x_j) = K(x_j,x_i) = G_{ji}$, is positive semidefinite.
+
+\subsubsection{Feature Mapping}
+
+In order to make the computation simpler, the kernel needs to be written in the form of a "feature map". Mercer's theorem (or Aronszajn's theorem) gives the definition of a feature map:
+\begin{theorem} [Mercer's theorem]
+The function $K$ is a positive definite kernel on the $\mathcal{X}$ if and only if there exists a Hilbert space $\mathcal{H}$ with an inner product $\langle \cdot,\cdot\rangle_{\mathcal{H}}$ and a mapping
+\[
+\phi: \mathcal{X}\mapsto\mathcal{H}
+\]
+such that, for any $x$, $x'$ in $\mathcal{X}$:
+\[
+K(x,x') = \langle\phi(x),\phi(x')\rangle_{\mathcal{H}}
+\]
+\end{theorem}
+The function $\phi$ is called the {\bf feature mapping}.
+\\
+In other words, the feature mapping is used to take the data in a space of small dimension $\mathcal{X}$ and map them into a Hilbert space of high dimension (even infinite). We do this because, it will be easier to perform a regression of the data in a space of higher dimension.
+
+\subsubsection{Idea about the Kernel Methods}
+\label{meth}
+The {\bf kernel methods} are using a set of pre-trained data. We can denote them by the pairs of example: $(x_1, y_1), \ldots, (x_n,y_n) \in \mathcal{X} \times \mathcal{Y}$. This means that for all the input $x_i, ~ i=1,\ldots,n$, we know the corresponding result $y_i$. Now, we can add an unlabelled value, let's say $x'$. The kernel function will be used to compare $x'$ with all the pre-trained inputs $x_i$. The kernel will then say if $x'$ is similar to $x_i$ or not. With adding weights for each of the pre-trained examples, an output $\hat{y}$ depending on the unlabelled input $x'$ can be computed. 
+\\ 
+We can use the example of a {\it kernelized binary classifier}. It computes a weighted sum of similarities:
+\begin{equation}
+\hat{y} = \text{sgn}\sum_{i=1}^{n }w_i y_i K(x_i,x')
+\end{equation}
+where
+\begin{itemize}
+\item $\hat{y}\in\{-1,+1\}$ is the predicted output for the unlabeled input $x'$
+\item $K: \mathcal{X}\times\mathcal{X} \mapsto \mathbb{R}$ is the kernel function
+\item $\{(x_i, y_i)\}_{i=1}^{n}$ are the pre-trained examples with $y_i\in\{-1,+1\}\forall i$.
+\item $w_i\in \mathbb{R}$ are the weights for the pre-trained examples. They are determined by the larning algorithm.
+\item $\text{sgn}$ is the sign function.
+\end{itemize}
+With this example, we can clearly see how a kernel function can be used to label a new input. The kernel method is the learning algorithm that will provide the weights $w_i$.
+
 \subsection{Kernel methods as convex optimization problems}
-\subsection{From infinite to finite}
+
+From section \ref{meth}, we already understand that the learning algorithm will have to find the best weights in order to have the most accurate prediction. The idea of the learning algorithm is to take a subset of the pre-trained examples, test the predictions, change the weight, etc. This can easily be seen as an optimization problem.  
+
+\subsection{From infinite to finite - The kernel trick}
 \section{Support vector machines: a special case}
 \subsection{Generalities}
 \subsection{Dual problem}
