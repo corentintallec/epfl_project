@@ -14,12 +14,15 @@
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\Hilb}{\mathcal{H}}
 
 \newcommand{\x}{x_i}
 \newcommand{\y}{y_i}
 
 \newcommand{\inner}[2]{\langle #1 , #2 \rangle_{\R^d}}
+\newcommand{\innerh}[2]{\langle #1 , #2 \rangle_{\Hilb}}
 \newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\normh}[1]{\left\| #1 \right\|_\Hilb}
 
 \title{Kernel Methods and SVMs:
 A convex optimization point of view}
@@ -44,10 +47,15 @@ Corentin Tallec}
   and how their optimization can be undertaken in practice. Besides,
   we intend to give a more precise treatment of the support vectors
   machines special case.
+
+  \color{red}We need to add the reference to the course notes we
+  used !
+  \color{black}
 \end{abstract}
 
 \section{Kernel methods}
 \subsection{Generalities}
+\label{sub:gen}
 
 Kernel methods are tools broadly used in various fields, but most notably in
 machine learning and pattern discrimination. Among this class of methods,
@@ -70,13 +78,15 @@ to unseen datapoints. One way of doing so is to solve the following optimization
 problem:
 \begin{equation}
   \min\limits_{f\in\F} \frac{1}{n}\sum\limits_{i=1}^nL(\y,f(\x)) + \lambda\Omega(f)
+  \label{eq:min}
 \end{equation}
-where $L$ is a cost function, that measure how close $f(\x)$ is to $\y$ for each
-$i$, and $\Omega$ is a regularizing term, that aims at describing the complexity
-of a certain function $f$. In the general case, this optimization problem is not required
-to be convex. Kernel methods provide a set of function $\F$ and a regularizing term
-$\Omega(f)$ such that when the cost function is assumed to be convex, the entire
-problem is convex, and can be easily solved.
+where $L$ is a cost function, that measure how close $f(\x)$ is to $\y$ for
+each $i$, $\lambda$ is a positive real number and $\Omega$ is a regularizing
+term, that aims at describing the complexity of a certain function $f$. In the
+general case, this optimization problem is not required to be convex. Kernel
+methods provide a set of function $\F$ and a regularizing term $\Omega(f)$ such
+that when the cost function is assumed to be convex, the entire problem is
+convex, and can be easily solved.
 
 In the following sections, kernel functions are defined, as well as their
 relation to the idea of feature mapping, and the general principle of kernel
@@ -104,7 +114,7 @@ as the polynomial kernel). Another well known kernel is
 the gaussian kernel, defined as $K(x, x') = e^{- \frac{\norm{x-y}^2}{2\sigma^2}}$.
 
 \subsubsection{Feature mapping}
-\label{map}
+\label{subsub:map}
 As seen in Subsection~\ref{subsub:psd}, the canonical inner
 product of a vector space is a kernel. Mercer's theorem provides
 a kind of reciprocal statement: any kernel can be viewed as an
@@ -127,9 +137,48 @@ a (larger) space. One benefit of doing so can be, for example, to simplify
 regression or classification problems, as these problems tend to
 be easier in high dimensional space than in low dimensional ones.
 
-\subsubsection{Back to classification}
+\subsubsection{Kernel methods as convex optimization problems}
+Recall the kind of problem exposed in Sec~\ref{sub:gen}, by eq~\ref{eq:min}.
+Now, once a kernel $K$ is defined, it implicitly defines a functional space $\Hilb$ on $\X$, as
+explained in Sec~\ref{subsub:map}. This space can be used as the prediction function space,
+that is $\F = \Hilb$, and the regularization term can be replaced by the squared norm in $\Hilb$.
+This gives the following minimization problem:
+\begin{equation}
+  \min\limits_{f\in\Hilb} \frac{1}{n}\sum\limits_{i=1}^nL(\y,f(\x)) + \lambda\normh{f}^2
+  \label{eq:minkernel}
+\end{equation}
+
+When $L$ is a convex function, it is quite clear that the resulting minimization problem is
+a convex optimization problem: the squared norm is a convex function of $f$, $f \mapsto f(x)$
+is a linear function for any $x \in \X$, thus $L(\y,f(\x))$ is convex for all $i$, which lead
+to the global convexity. However, the space $\Hilb$ considered is, in the general case, infinite,
+and this makes convex optimization unapplicable.
+
+\subsection{From infinite to finite}
+Happily enough, the representer theorem stated below turns this infinite dimensional convex optimization
+problem into your gentle everyday $n$-dimensional convex optimization problem:
+\begin{theorem}[Representer theorem]
+  Using the notations previously defined, let $\Psi:\R^{n+1}\mapsto\R$ be a function strictly increasing in 
+  the last variable. Then any solution of
+  \begin{equation}
+    \min\limits_{f\in\Hilb}\Psi(f(x_1), \dots, f(x_n), \normh{f})
+  \end{equation}
+  admits a representation of the form:
+  \begin{equation}
+    \forall x \in \X, f(x) = \sum\limits_{i=1}^n\alpha_iK(\x,x).
+  \end{equation}
+\end{theorem}
+The equation~\ref{eq:minkernel} clearly falls in the field of application of the representer theorem.
+The optimization problem can thus be rewritten in term of $\alpha$'s as:
+\begin{equation}
+  \min\limits_{(\alpha_1, \dots, \alpha_n)\in\R^n} 
+  \frac{1}{n}\sum\limits_{i=1}^nL(\y, \sum\limits_{j=1}^n\alpha_jK(x_j, x_i)) +
+  \lambda\sum\limits_{1\leq i,j\leq n}\alpha_i\alpha_j K(\x, x_j)
+\end{equation}
+which is a finite dimensional convex optimization problem.
+
 \subsubsection{Idea about the Kernel Methods}
-\label{meth}
+\label{subsub:meth}
 The {\bf kernel methods} are using a set of pre-trained data. We can denote them by the pairs of example: $(x_1, y_1), \ldots, (x_n,y_n) \in \mathcal{X} \times \mathcal{Y}$. This means that for all the input $x_i, ~ i=1,\ldots,n$, we know the corresponding result $y_i$. Now, we can add an unlabelled value, let's say $x'$. The kernel function will be used to compare $x'$ with all the pre-trained inputs $x_i$. The kernel will then say if $x'$ is similar to $x_i$ or not. With adding weights for each of the pre-trained examples, an output $\hat{y}$ depending on the unlabelled input $x'$ can be computed. 
 \\ 
 We can use the example of a {\it kernelized binary classifier}. It computes a weighted sum of similarities:
@@ -148,7 +197,7 @@ With this example, we can clearly see how a kernel function can be used to label
 
 \subsection{Kernel methods as convex optimization problems}
 
-From section \ref{meth}, we already understand that the learning algorithm will have to find the best weights in order to have the most accurate prediction. The idea of the learning algorithm is to take a subset of the pre-trained examples, test the predictions, change the weight, etc. This can easily be seen as an optimization problem.  
+From section, we already understand that the learning algorithm will have to find the best weights in order to have the most accurate prediction. The idea of the learning algorithm is to take a subset of the pre-trained examples, test the predictions, change the weight, etc. This can easily be seen as an optimization problem.  
 \\\\
 
 {\color{red} Je suis un peu perdu sur cette partie... }
@@ -157,7 +206,7 @@ From section \ref{meth}, we already understand that the learning algorithm will 
 
 {\bf \color{red} KERNEL TRICK + REPRESENTER THEOREM}
 
-We saw in the section \ref{map}, we can use a feature map to go from the input space $\mathcal{X}$ to a Hilbert space of a very high or infinite dimension $\mathcal{H}$. However, having the explicit representation of the mapping can be difficult and it is not convenient to work with it because of the high dimension of $\mathcal{H}$. Therefore, the idea is to work implicitly in the feature space $\mathcal{H}$. In order to do this, we must define the kernel trick.
+We saw in the section , we can use a feature map to go from the input space $\mathcal{X}$ to a Hilbert space of a very high or infinite dimension $\mathcal{H}$. However, having the explicit representation of the mapping can be difficult and it is not convenient to work with it because of the high dimension of $\mathcal{H}$. Therefore, the idea is to work implicitly in the feature space $\mathcal{H}$. In order to do this, we must define the kernel trick.
 
 \begin{definition} [The Kernel trick]
 We take any algorithm to process finite-dimensional vectors. If we can express this algorithms only in terms of pairwise inner products. Then this algorithm can be applied to potentially infinite-dimensional vectors in the feature space of a positive definite kernel if we replace each inner product evaluation by a kernel evaluation.
