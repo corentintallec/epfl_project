@@ -1,5 +1,8 @@
 %% LOADING DATA
 clear all;
+close all;
+clc;
+
 trainSet = loadImages('./data/train-images.idx3-ubyte')';
 trainLabel = strtrim(cellstr(num2str(loadLabels('./data/train-labels.idx1-ubyte'))));
 %testSet = loadImages('./data/t10k-images.idx3-ubyte')';
@@ -26,7 +29,6 @@ for i = 1:numel(classes)
     display(['Start training for digit ', num2str(i-1)]);
     idx = strcmp(trainLabel, classes(i)); % Create binary classes for each classifier
     
-    display(['Start Linear Kernel']);
     tic;
     SVMModelsLin{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'linear');
     times(i,1) = toc;
@@ -59,7 +61,6 @@ for i = 1:numel(classes)
     display(['Start training for digit ', num2str(i-1)]);
     idx = strcmp(trainLabel, classes(i)); % Create binary classes for each classifier
     
-    display(['Start RBF Kernel']);
     tic;
     SVMModelsRBF{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'rbf');
     times(i,3) = toc;
