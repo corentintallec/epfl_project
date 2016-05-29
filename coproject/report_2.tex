@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{xcolor}
+\usepackage{hyperref}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -14,10 +15,12 @@
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\K}{\bold{K}}
 \newcommand{\Hilb}{\mathcal{H}}
 
 \newcommand{\x}{x_i}
 \newcommand{\y}{y_i}
+\newcommand{\pmset}{\left\{\pm1\right\}}
 
 \newcommand{\inner}[2]{\langle #1 , #2 \rangle_{\R^d}}
 \newcommand{\innerh}[2]{\langle #1 , #2 \rangle_{\Hilb}}
@@ -48,9 +51,9 @@ Corentin Tallec}
   we intend to give a more precise treatment of the support vectors
   machines special case.
 
-  \color{red}We need to add the reference to the course notes we
-  used !
-  \color{black}
+  Most theoretical results used here are presented, explained and
+  proved more thoroughly in the ``Master vision et apprentissage''
+  of the ``Ecole normale superieure de Cachan'' course on kernels.
 \end{abstract}
 
 \section{Kernel methods}
@@ -85,7 +88,7 @@ each $i$, $\lambda$ is a positive real number and $\Omega$ is a regularizing
 term, that aims at describing the complexity of a certain function $f$. In the
 general case, this optimization problem is not required to be convex. Kernel
 methods provide a set of function $\F$ and a regularizing term $\Omega(f)$ such
-that when the cost function is assumed to be convex, the entire problem is
+that when the cost function is assumed to be convex in its second argument, the entire problem is
 convex, and can be easily solved.
 
 In the following sections, kernel functions are defined, as well as their
@@ -142,13 +145,13 @@ Recall the kind of problem exposed in Sec~\ref{sub:gen}, by eq~\ref{eq:min}.
 Now, once a kernel $K$ is defined, it implicitly defines a functional space $\Hilb$ on $\X$, as
 explained in Sec~\ref{subsub:map}. This space can be used as the prediction function space,
 that is $\F = \Hilb$, and the regularization term can be replaced by the squared norm in $\Hilb$.
+
 This gives the following minimization problem:
 \begin{equation}
-  \min\limits_{f\in\Hilb} \frac{1}{n}\sum\limits_{i=1}^nL(\y,f(\x)) + \lambda\normh{f}^2
+  \min\limits_{f\in\Hilb} \frac{1}{n}\sum\limits_{i=1}^nL(\y,f(\x)) + \lambda\normh{f}^2.
   \label{eq:minkernel}
 \end{equation}
-
-When $L$ is a convex function, it is quite clear that the resulting minimization problem is
+When $L$ is a convex function over its second argument, it is quite clear that the resulting minimization problem is
 a convex optimization problem: the squared norm is a convex function of $f$, $f \mapsto f(x)$
 is a linear function for any $x \in \X$, thus $L(\y,f(\x))$ is convex for all $i$, which lead
 to the global convexity. However, the space $\Hilb$ considered is, in the general case, infinite,
@@ -166,6 +169,7 @@ problem into your gentle everyday $n$-dimensional convex optimization problem:
   admits a representation of the form:
   \begin{equation}
     \forall x \in \X, f(x) = \sum\limits_{i=1}^n\alpha_iK(\x,x).
+    \label{eq:bestfit}
   \end{equation}
 \end{theorem}
 The equation~\ref{eq:minkernel} clearly falls in the field of application of the representer theorem.
@@ -177,48 +181,109 @@ The optimization problem can thus be rewritten in term of $\alpha$'s as:
 \end{equation}
 which is a finite dimensional convex optimization problem.
 
-\subsubsection{Idea about the Kernel Methods}
-\label{subsub:meth}
-The {\bf kernel methods} are using a set of pre-trained data. We can denote them by the pairs of example: $(x_1, y_1), \ldots, (x_n,y_n) \in \mathcal{X} \times \mathcal{Y}$. This means that for all the input $x_i, ~ i=1,\ldots,n$, we know the corresponding result $y_i$. Now, we can add an unlabelled value, let's say $x'$. The kernel function will be used to compare $x'$ with all the pre-trained inputs $x_i$. The kernel will then say if $x'$ is similar to $x_i$ or not. With adding weights for each of the pre-trained examples, an output $\hat{y}$ depending on the unlabelled input $x'$ can be computed. 
-\\ 
-We can use the example of a {\it kernelized binary classifier}. It computes a weighted sum of similarities:
-\begin{equation}
-\hat{y} = \text{sgn}\sum_{i=1}^{n }w_i y_i K(x_i,x')
-\end{equation}
-where
-\begin{itemize}
-\item $\hat{y}\in\{-1,+1\}$ is the predicted output for the unlabeled input $x'$
-\item $K: \mathcal{X}\times\mathcal{X} \mapsto \mathbb{R}$ is the kernel function
-\item $\{(x_i, y_i)\}_{i=1}^{n}$ are the pre-trained examples with $y_i\in\{-1,+1\}\forall i$.
-\item $w_i\in \mathbb{R}$ are the weights for the pre-trained examples. They are determined by the larning algorithm.
-\item $\text{sgn}$ is the sign function.
-\end{itemize}
-With this example, we can clearly see how a kernel function can be used to label a new input. The kernel method is the learning algorithm that will provide the weights $w_i$.
-
-\subsection{Kernel methods as convex optimization problems}
-
-From section, we already understand that the learning algorithm will have to find the best weights in order to have the most accurate prediction. The idea of the learning algorithm is to take a subset of the pre-trained examples, test the predictions, change the weight, etc. This can easily be seen as an optimization problem.  
-\\\\
-
-{\color{red} Je suis un peu perdu sur cette partie... }
-
-\subsection{From infinite to finite}
-
-{\bf \color{red} KERNEL TRICK + REPRESENTER THEOREM}
-
-We saw in the section , we can use a feature map to go from the input space $\mathcal{X}$ to a Hilbert space of a very high or infinite dimension $\mathcal{H}$. However, having the explicit representation of the mapping can be difficult and it is not convenient to work with it because of the high dimension of $\mathcal{H}$. Therefore, the idea is to work implicitly in the feature space $\mathcal{H}$. In order to do this, we must define the kernel trick.
-
-\begin{definition} [The Kernel trick]
-We take any algorithm to process finite-dimensional vectors. If we can express this algorithms only in terms of pairwise inner products. Then this algorithm can be applied to potentially infinite-dimensional vectors in the feature space of a positive definite kernel if we replace each inner product evaluation by a kernel evaluation.
-\end{definition}
-
-Intuitively, the idea is that we will compute $K(x,x') = \langle\phi(x),\phi(x')\rangle_{\mathcal{H}}$ without even knowing the function $\phi(x)$ because it is often really complex.
-\\\\
-
-
-
 \section{Support vector machines: a special case}
+Support vector machines are kernel methods used in the field of binary
+classification, and that can be extended (quite painfully, unfortunately) to
+$n$-ary classification.  Among kernel methods, they are probably the best
+known.  This might be explained by the fact that they enforce sparsity in the
+best fit representation. Formally, they ensure that in eq~\ref{eq:bestfit}, a
+varying number of $\alpha$'s will be exactly zero.  Sparsity often brings along
+a lot of nice properties. For SVMs, most notably, they ensure a better
+regularization (intuitively, a fit with less term is less complex than a fit
+with many terms, and the number of term is directly related to the number of
+non-zero $\alpha$'s), and they induce smaller computational cost. Indeed, the
+best fit represented in eq~\ref{eq:bestfit} has as many terms as there are
+datapoints in the train dataset. This means that the computational cost at test
+time will depend directly on the number of datapoints in the training set. This
+might prove computationally costly. SVMs partly solve this problem by ensuring
+that some (most) $\alpha$'s are zero, and thus that the best fit will only
+depend on a few training datapoints. 
 \subsection{Generalities}
-\subsection{Dual problem}
-\subsection{A use case}
+Given an input set $\X$, a p.s.d kernel on $\X$, $K$ and a training dataset,
+$((x_1, y_1), \dots, (x_n, y_n)) \in (\X \times \pmset)^n$, SVMs solve the
+kernel optimization problem eq~\ref{eq:minkernel} with the particular choice of
+loss $L(x, y) = \max(0, 1 - x^\top y)$, which is known as the Hinge Loss.
+
+A few remarks might be of use at this point:
+\begin{itemize}
+  \item The Hinge Loss is clearly convex in $x$. It is a maximum over two affine
+    functions of $x$, and is thus convex.
+  \item Datapoints are classified simply by looking at the sign of $f(x)$ where
+    $f$ is the fit. If $f(x) > 0$, $x$ is classified as $+1$, else $x$ is classified
+    ad $-1$. The specificity of the Hinge Loss is to try and drive $f(x)$ towards $+1$
+    when $x$ is in the $+1$ class, and toward $-1$ when $x$ is in the $-1$ class, but not
+    to do any further effort.
+\end{itemize}
+Rewritting eq~\ref{eq:minkernel} in the SVM case, and introducing
+additionnal slack variables, the optimization problem we intend to
+solve takes the form:
+\begin{equation}
+  \min\limits_{f\in\Hilb,\xi\in\R^n}
+  \frac{1}{n}\sum\limits_{i=1}^n\xi_i + \lambda \normh{f}^2
+\end{equation}
+subject to:
+\begin{equation}
+  \begin{cases}
+    \xi_i \geq 1 - y_i f(x_i)\\
+    \xi_i \geq 0
+  \end{cases}
+\end{equation}
+Using the representer theorem, this can be transformed in
+\begin{equation}
+  \min_{\alpha\in\R^n, \xi\in\R^n}
+  \frac{1}{n}\sum\limits_{i=1}^n\xi_i
+  + \lambda \alpha^\top \K \alpha
+\end{equation}
+subject to:
+\begin{equation}
+  \begin{cases}
+    y_i\sum\limits_{j=1}^n\alpha_jK(\x, x_j) + \xi_i - 1 \geq 0\\
+    \xi_i \geq 0
+  \end{cases}
+\end{equation}
+where $\K$ is the p.s.d. matrix associated to the kernel $K$ on
+the dataset, that is $\K_{i,j} = K(\x, x_j)$. This is a quadratic
+program.
+
+The dual problem can easily be expressed:
+\begin{equation}
+  \max\limits_{0\leq\mu\leq 1/n}
+  \sum\limits_{i=1}^n\mu_i
+  - \frac{1}{4\lambda}\sum\limits_{1\leq i,j \leq n}y_iy_j\mu_i\mu_jK(x_i, x_j).
+\end{equation}
+Now expressing the relation between primal and dual solutions:
+\begin{equation}
+  \alpha = \text{diag}(y)\mu/2\lambda
+\end{equation}
+(this is done by rewriting the optimization condition on the
+Lagrangian with respect to the $\alpha$ variables)
+and injecting this relation into the dual, we get the following
+easier problem:
+\begin{equation}
+  2\alpha^\top y - \alpha^\top \K \alpha
+\end{equation}
+subject to:
+\begin{equation}
+  0 \leq y_i\alpha_i \leq \frac{1}{2\lambda n}
+\end{equation}
+(The crucial point in deriving this new optimization problem is
+to notice that $y_i^2 = 1$, since $y_i \in \pmset$).
+
+On this very simple optimization problem, the KKT conditions can
+be easily expressed, and they lead to the following complementary
+slackness equations:
+\begin{equation}
+  \begin{cases}
+    \alpha_i\left[y_if(x_i) + \xi_i - 1\right] = 0\\
+    \left[\alpha_i - \frac{y_i}{2\lambda n}\right]\xi_i = 0.
+  \end{cases}
+\end{equation}
+With a bit of analysis with these equations and the constraints
+of the primal, it can be easily shown that the only terms for
+which $\alpha_i \neq 0$ are the examples ``hard to classify'' that
+is for which $y_i f(x_i) \leq 1$ (those examples can be well
+classified, but their classifiction margin is not large). All in
+all, this tends to express the fact that only a few datapoints
+are involved in the best fit expression. This has a tremendous
+impact on further computations involving the best fit.
 \end{document}
