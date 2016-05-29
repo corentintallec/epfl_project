@@ -1,9 +1,9 @@
-% load training set and testing set
+%% LOADING DATA
 clear all;
 trainSet = loadImages('./data/train-images.idx3-ubyte')';
 trainLabel = strtrim(cellstr(num2str(loadLabels('./data/train-labels.idx1-ubyte'))));
-testSet = loadImages('./data/t10k-images.idx3-ubyte')';
-testLabel = strtrim(cellstr(num2str(loadLabels('./data/t10k-labels.idx1-ubyte'))));
+%testSet = loadImages('./data/t10k-images.idx3-ubyte')';
+%testLabel = strtrim(cellstr(num2str(loadLabels('./data/t10k-labels.idx1-ubyte'))));
 
 SVMModelsLin = cell(9,1);
 SVMModelsPol = cell(9,1);
@@ -30,21 +30,41 @@ for i = 1:numel(classes)
     times(i,1) = toc;
     display(['Finished training for Linear Kernel, Time taken: ', num2str(times(i))]);
     trainingTimeLin = trainingTimeLin + times(i,1);
-    
+end
+
+save('SVMModelsLin.mat', SVMModelsLin);
+save('trainingTimeLin.mat', trainingTimeLin);
+ 
+for i = 1:numel(classes)
+    display(['Start training for class ', num2str(i-1)]);
+    idx = strcmp(trainLabel, classes(i)); % Create binary classes for each classifier
+       
     display(['Start Polynomial Kernel']);
     tic;
-    SVMModelsLin{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'polynomial', 'PolynomialOrder', 4);
-    times(i,1) = toc;
+    SVMModelsPol{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'polynomial', 'PolynomialOrder', 4);
+    times(i,2) = toc;
     display(['Finished training for Polynomial Kernel, Time taken: ', num2str(times(i))]);
-    trainingTimeLin = trainingTimeLin + times(i,2);
+    trainingTimePol = trainingTimePol + times(i,2);
+end
+
+save('SVMModelsPol.mat', SVMModelsPol);
+save('trainingTimePol.mat', trainingTimePol);
+
+for i = 1:numel(classes)
+    display(['Start training for class ', num2str(i-1)]);
+    idx = strcmp(trainLabel, classes(i)); % Create binary classes for each classifier
     
     display(['Start RBF Kernel']);
     tic;
-    SVMModelsLin{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'rbf');
-    times(i,1) = toc;
+    SVMModelsRBF{i} = fitcsvm(trainSet , idx , 'KernelFunction', 'rbf');
+    times(i,3) = toc;
     display(['Finished training for RBF Kernel, Time taken: ', num2str(times(i))]);
-    trainingTimeLin = trainingTimeLin + times(i,3);    
+    trainingTimeRBF = trainingTimeRBF + times(i,3);    
 end
+
+save('SVMModelsRBF.mat', SVMModelsRBF);
+save('trainingTimeRBF.mat', trainingTimeRBF);
+save('times.mat',times);
 
 %% CLASSIFICATION
 
