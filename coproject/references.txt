@@ -3,3 +3,8 @@ http://lear.inrialpes.fr/people/mairal/teaching/2015-2016/MVA/fichiers/mva_slide
 
 Paper on Kernel methods and convex optimization:
 https://stanford.edu/~boyd/papers/pdf/kernel_learning_icassp08.pdf
+
+Wikipédia - Kernel methods
+https://en.wikipedia.org/wiki/Kernel_method
+
+
