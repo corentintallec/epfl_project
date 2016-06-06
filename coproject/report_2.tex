@@ -1,11 +1,51 @@
 \documentclass[a4paper, 11pt]{article}
-\usepackage[english]{babel}
-
+% pour l'inclusion de figures en eps,pdf,jpg
+\usepackage{graphicx}
+% quelques symboles mathematiques en plus
 \usepackage{amsmath}
+% le tout en langue francaise
+%\usepackage[french]{babel}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+% on utilise les liens internet
+\usepackage{url}
+% pour l'inclusion de links dans le document 
+\usepackage[colorlinks,bookmarks=false,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage{listings}
+
+\usepackage{float}
+
+\usetikzlibrary{patterns,arrows,decorations.pathreplacing}
+
+
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{xcolor}
-\usepackage{hyperref}
+
+\usepackage{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ATTENTION : package supplementaire
+\usepackage[stable]{footmisc}
+\usepackage{wrapfig}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paperheight=297mm
+\paperwidth=210mm
+
+\setlength{\textheight}{235mm}
+\setlength{\topmargin}{-1.2cm} % pour centrer la page verticalement
+%\setlength{\footskip}{5mm}
+\setlength{\textwidth}{15cm}
+\setlength{\oddsidemargin}{0.56cm}
+\setlength{\evensidemargin}{0.56cm}
+\setlength{\parindent}{0cm}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
@@ -27,8 +67,8 @@
 \newcommand{\norm}[1]{\left\| #1 \right\|}
 \newcommand{\normh}[1]{\left\| #1 \right\|_\Hilb}
 
-\title{Kernel Methods and SVMs:
-A convex optimization point of view}
+\title{{\bf Kernel Methods and SVMs} \\
+{\large A convex optimization point of view}}
 \author{Gael Lederrey\\
   \and
 Corentin Tallec}
@@ -286,4 +326,40 @@ classified, but their classifiction margin is not large). All in
 all, this tends to express the fact that only a few datapoints
 are involved in the best fit expression. This has a tremendous
 impact on further computations involving the best fit.
+
+\subsection{Use case}
+
+The theory works well, but a use case is always needed. We decided to use the SVM to learn our computer how to recognize handwritten digits. We used the MNIST database. Some examples are given in Figure \ref{fig:train-set}. 
+
+\begin{figure}[H]
+\centering
+\input{./figures/train-set.tex}
+\caption{\label{fig:train-set} Some examples of the MNIST train set with their label.}
+\end{figure}
+
+We trained the algorithm with different kernel functions:
+\begin{itemize}
+\item Linear kernel: $K(x_i,x_j) = \langle x_i, x_j \rangle$
+\item Polynomial kernel: $K(x_i,x_j) = (\gamma \langle x_i, x_j \rangle + r)^p$, $\gamma$ is a parameter that needs to be found and we decided to keep $r=0$ and we used $p=4$.
+\item RBF kernel:  $K(x_i,x_j) = \exp(-\gamma|x_i-x_j|^2)$, $\gamma$ is a parameter that needs to be found.
+\end{itemize} 
+
+For each of these kernels, we trained on train-set composed of 60000 handwritten digits with their labels. Then, we test our trained models against a test-set composed of 10000 images. We can then compared the predicted labels against the true labels. 
+\\\\
+On of the important result is the percentage of correct prediction. It is given for each of the kernel in Table \ref{tab:results}. As we can see, the best kernel is the RBF one. It has already been shown in the literature that this kernel is the best one for SVM.
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+Linear Kernel & 94.62\% \\\hline
+Polynomial Kernel (degree 4) & 97.31\% \\\hline
+RBF Kernel & 98.56 \% \\ \hline
+\end{tabular}
+\caption{\label{tab:results} Percentage of correct prediction after training.}
+\end{table}
+
+{\color{red} Ici, je veux mettre une figure avec toutes les predictions dur RBF. Et finalement montrer quelques fausses predictions. Juste apres, on pourra faire un conclusion.}
+
+
+
 \end{document}
