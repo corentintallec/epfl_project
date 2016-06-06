@@ -1,0 +1,33 @@
+Classification report for classifier SVC(C=10, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=4, gamma=1e-06, kernel='poly',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False):
+             precision    recall  f1-score   support
+
+          0       0.97      0.99      0.98       980
+          1       0.96      0.99      0.98      1135
+          2       0.98      0.97      0.97      1032
+          3       0.97      0.97      0.97      1010
+          4       0.97      0.98      0.98       982
+          5       0.97      0.96      0.97       892
+          6       0.98      0.97      0.98       958
+          7       0.98      0.97      0.97      1028
+          8       0.97      0.97      0.97       974
+          9       0.98      0.96      0.97      1009
+
+avg / total       0.97      0.97      0.97     10000
+
+
+Confusion matrix:
+[[ 970    0    1    0    0    5    1    1    2    0]
+ [   0 1123    2    2    1    0    4    0    3    0]
+ [   9    6  999    0    2    0    4    8    4    0]
+ [   1    5    3  981    0    6    0    6    5    3]
+ [   3    2    3    0  960    0    4    1    1    8]
+ [   3    2    2   13    1  859    4    1    5    2]
+ [   4    6    2    0    4    6  934    0    2    0]
+ [   0   14    8    2    1    0    0  997    0    6]
+ [   7    2    1    6    5    6    1    2  942    2]
+ [   5    8    0    4   12    3    1    2    5  969]]
+Result: 0.973142958668
+
