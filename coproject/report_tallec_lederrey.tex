@@ -14,10 +14,24 @@
 \usepackage[colorlinks,bookmarks=false,linkcolor=blue,urlcolor=blue]{hyperref}
 
 \usepackage{tikz}
+\usepackage{footnote}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{pgfplots}
 \usepackage{listings}
+\usepackage{array,hhline}
+\usepackage{pgf}
+\usepackage{multirow,graphicx,array,xcolor,colortbl}
+
+\renewcommand*{\arraystretch}{1.5}
+
+\newcommand{\cca}[2]{
+	\cellcolor{black!#1}
+	\ifnum #1>50
+		\color{white}
+	\fi
+	{#2}
+	}
 
 \usepackage{float}
 
@@ -76,7 +90,7 @@ Corentin Tallec}
 \begin{document}
 \maketitle
 \begin{abstract}
-  Kernel methods, and more specifically support vectors machines, are
+Kernel methods, and more specifically support vectors machines, are
   well known, well theorized and efficient machine learning tools. For
   years, they were presenting state of the art performances in many
   machine learning fields, before being overtaken by deep learning
@@ -90,15 +104,13 @@ Corentin Tallec}
   and how their optimization can be undertaken in practice. Besides,
   we intend to give a more precise treatment of the support vectors
   machines special case.
-
-  Most theoretical results used here are presented, explained and
-  proved more thoroughly in the ``Master vision et apprentissage''
-  of the ``Ecole normale superieure de Cachan'' course on kernels.
 \end{abstract}
 
-\section{Kernel methods}
+\section{Kernel methods\footnotemark}
 \subsection{Generalities}
 \label{sub:gen}
+
+\footnotetext{The different elements presented in this section comes from the course on Machine Learning \cite{course} as well as the paper explaining how convex optimization is used with Kernel methods\cite{paper}.}
 
 Kernel methods are tools broadly used in various fields, but most notably in
 machine learning and pattern discrimination. Among this class of methods,
@@ -221,7 +233,8 @@ The optimization problem can thus be rewritten in term of $\alpha$'s as:
 \end{equation}
 which is a finite dimensional convex optimization problem.
 
-\section{Support vector machines: a special case}
+\section{Support vector machines: a special case\footnotemark}
+\footnotetext{The different elements presented in this section comes from the course on Machine Learning \cite{course} as well as the article on Wikip\'edia on SVM\cite{svm}.}
 Support vector machines are kernel methods used in the field of binary
 classification, and that can be extended (quite painfully, unfortunately) to
 $n$-ary classification.  Among kernel methods, they are probably the best
@@ -329,7 +342,7 @@ impact on further computations involving the best fit.
 
 \subsection{Use case}
 
-The theory works well, but a use case is always needed. We decided to use the SVM to learn our computer how to recognize handwritten digits. We used the MNIST database. Some examples are given in Figure \ref{fig:train-set}. 
+The theory works well, but a use case is always needed. We decided to use the SVM to learn our computer how to recognize handwritten digits. To do so, we create a script in python using the {\it sklearn}\cite{python} library. We used the MNIST database of handwritten digits\cite{mnist} provided by Yann Lecun and well studied. Each of the images (a handwritten digit between 0 and 9) has a given label. The purpose is to create a model using SVM such that the computer can recognize these digits. Some examples of the MNIST dataset are given in Figure \ref{fig:train-set}. 
 
 \begin{figure}[H]
 \centering
@@ -337,28 +350,74 @@ The theory works well, but a use case is always needed. We decided to use the SV
 \caption{\label{fig:train-set} Some examples of the MNIST train set with their label.}
 \end{figure}
 
-We trained the algorithm with different kernel functions:
+The purpose of this script was to train the computer on 60000 images with their labels. And then, test the model on 10000 images. We could finally compare the predicted labels against the real labels. In order to test the SVM method, we trained the algorithm with different kernel functions:
 \begin{itemize}
 \item Linear kernel: $K(x_i,x_j) = \langle x_i, x_j \rangle$
 \item Polynomial kernel: $K(x_i,x_j) = (\gamma \langle x_i, x_j \rangle + r)^p$, $\gamma$ is a parameter that needs to be found and we decided to keep $r=0$ and we used $p=4$.
 \item RBF kernel:  $K(x_i,x_j) = \exp(-\gamma|x_i-x_j|^2)$, $\gamma$ is a parameter that needs to be found.
 \end{itemize} 
 
-For each of these kernels, we trained on train-set composed of 60000 handwritten digits with their labels. Then, we test our trained models against a test-set composed of 10000 images. We can then compared the predicted labels against the true labels. 
-\\\\
-On of the important result is the percentage of correct prediction. It is given for each of the kernel in Table \ref{tab:results}. As we can see, the best kernel is the RBF one. It has already been shown in the literature that this kernel is the best one for SVM.
+The most important result is the correctness of the prediction. To do this, we take the number of correct prediction and we divide it by the length of the dataset. This gives us a percentage on the correctness of the model. We give in Table \ref{tab:correct} the results for each of the kernels.
+
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|}
+\begin{tabular}{l|c}
+Kernels & Correct prediction \\
 \hline
-Linear Kernel & 94.62\% \\\hline
-Polynomial Kernel (degree 4) & 97.31\% \\\hline
-RBF Kernel & 98.56 \% \\ \hline
+Linear & 94.62\% \\
+Polynomial (degree 4) & 97.31\% \\ 
+RBF & 98.56 \% \\ 
 \end{tabular}
-\caption{\label{tab:results} Percentage of correct prediction after training.}
+\caption{\label{tab:correct} Percentage of correct prediction for each of the kernels.}
 \end{table}
 
-{\color{red} Ici, je veux mettre une figure avec toutes les predictions dur RBF. Et finalement montrer quelques fausses predictions. Juste apres, on pourra faire un conclusion.}
+As we can see, the best kernel is the RBF one. It has already been shown in the literature that this kernel is the state-of-the-art in SVM. Another important aspect is to have a look at the predictions more precisely. For this, we use a confusion matrix. This matrix shows the labels (vertical axis) in function of the predictions (horizontal axis). It is interesting to have a look at this matrix to see if there is some bias. (For example, 1 can be often predicted as 7). The confusion matrix for the RBF kernel is given in Table \ref{tab:conf_mat}. As we can see in this table, we don't have any bias. We just show some wrong predictions in Figure \ref{fig:wrong-label}. This figure shows us that some of the images are difficult to label, even for us.
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cc|c|c|c|c|c|c|c|c|c|c|}
+\multicolumn{2}{c}{} & \multicolumn{10}{c}{Predictions} \\
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{0} & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9}  \\
+\cline{3-12}
+\multirow{10}{*}{\rotatebox[origin=c]{90}{Labels}}
+& 0 & \cca{99}{974} & 0 & 1 & 0 & 0 & 2 & 0 & 1 & 2 & 0 \\ \cline{3-12}
+& 1 & 0 & \cca{99}{1128} & 3 & 1 & 0 & 1 & 0 & 1 & 1 & 0 \\ \cline{3-12}
+& 2 & 4 & 0 & \cca{98}{1017} & 0 & 1 & 0 & 0 & 7 & 3 & 0 \\ \cline{3-12}
+& 3 & 0 & 0 & 2 & \cca{99}{997} & 1 & 2 & 0 & 4 & 3 & 1 \\ \cline{3-12}
+& 4 & 0 & 0 & 2 & 0 & \cca{99}{968} & 0 & 4 & 0 & 1 & 7 \\ \cline{3-12} 
+& 5 & 2 & 0 & 0 & 5 & 1 & \cca{98}{877} & 3 & 1 & 2 & 1 \\ \cline{3-12} 
+& 6 & 3 & 2 & 0 & 0 & 2 & 2 & \cca{99}{948} & 0 & 1 & 0 \\ \cline{3-12} 
+& 7 & 0 & 3 & 8 & 1 & 1 & 0 & 0 & \cca{98}{1007} & 1 & 7 \\ \cline{3-12} 
+& 8 & 3 & 0 & 1 & 3 & 1 & 1 & 0 & 2 & \cca{97}{959} & 4 \\ \cline{3-12} 
+& 9 & 2 & 3 & 1 & 6 & 6 & 2 & 1 & 5 & 1 & \cca{100}{982} \\ \cline{3-12} 
+\end{tabular}
+\caption{\label{tab:conf_mat} Confusion Matrix for the RBF kernel.}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\input{./figures/wrong-label.tex}
+\caption{\label{fig:wrong-label} Examples of images that have not been labelled correctly. This number above the pictures are like this: label $\rightarrow$ prediction.}
+\end{figure}
+
+\section{Conclusion}
+
+Within this project, we explored a really interesting topic. Indeed, Machine Learning as well as Artificial Intelligence is today's future technology. A lot of start-ups are working on this and applying it to a lot of different fields such as Facial and Emotion Recognition, Language Recognition, Data Mining, etc. Until not so long ago, the SVM were the state-of-the-art. Now, Random Forests and Deep-Learning (Convolutional Neural Networks) are better than this method. But their underlying theory is sometimes not totally understood compared to the SVM. Indeed, Convex Optimization is very known field by many scientist. Developing a model using Convex Optimization to make the computer learn things, such as handwritten digits, is quite amazing.
+
+\begin{thebibliography}{1}
+
+\bibitem{course} \href{http://lear.inrialpes.fr/people/mairal/teaching/2015-2016/MVA/fichiers/mva_slides.pdf}{Slides of the course on "{\it Kernel Methods for Machine Learning}", Inria, Grenoble, France}
+
+\bibitem{paper} Kim, Seung-Jean, et al. "Learning the kernel via convex optimization." {\it Acoustics, Speech and Signal Processing, 2008. ICASSP 2008. IEEE International Conference on.} IEEE, 2008.
+
+\bibitem{svm} \href{https://en.wikipedia.org/wiki/Support_vector_machine}{Wikip\'edia - Support Vector Machine}
+
+\bibitem{python} \href{Library {\it sklearn} for Machine Learning in Python. Functions on SVM/SVC.}{http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}
+
+\bibitem{mnist} \href{The MNIST Databse of handwritten digits. (Website of Yann Lecun)}{http://yann.lecun.com/exdb/mnist/}
+
+\end{thebibliography}
 
 
 
