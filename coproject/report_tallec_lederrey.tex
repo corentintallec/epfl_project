@@ -342,7 +342,14 @@ impact on further computations involving the best fit.
 
 \subsection{Use case}
 
-The theory works well, but a use case is always needed. We decided to use the SVM to learn our computer how to recognize handwritten digits. To do so, we create a script in python using the {\it sklearn}\cite{python} library. We used the MNIST database of handwritten digits\cite{mnist} provided by Yann Lecun and well studied. Each of the images (a handwritten digit between 0 and 9) has a given label. The purpose is to create a model using SVM such that the computer can recognize these digits. Some examples of the MNIST dataset are given in Figure \ref{fig:train-set}. 
+Let us now dwelve in a commonly presented use case. We decided to use the SVM
+to perform handwritten digits recognition handwritten digits.  The {\it
+sklearn}\cite{python} machine learning library was used, to train SVMs on the
+MNIST database of handwritten digits\cite{mnist} retrieved from Yann Lecun's
+website.  Each of the images (a handwritten digit between 0 and 9) has a given
+label. The goal is to train a SVM to  recognize these digits. Some examples of
+the MNIST dataset are given in
+Figure \ref{fig:train-set}. 
 
 \begin{figure}[H]
 \centering
@@ -350,14 +357,22 @@ The theory works well, but a use case is always needed. We decided to use the SV
 \caption{\label{fig:train-set} Some examples of the MNIST train set with their label.}
 \end{figure}
 
-The purpose of this script was to train the computer on 60000 images with their labels. And then, test the model on 10000 images. We could finally compare the predicted labels against the real labels. In order to test the SVM method, we trained the algorithm with different kernel functions:
+The purpose of this script was to train SVMs on 60000 images with their
+labels. And then, test the model on 10000 images. We could finally compare the
+predicted labels against the real labels. In order to test the SVM method, we
+trained the algorithm with different kernel functions. As SVMs naturally perform
+binary classification, and not $n$-ary classification, one-vs-all classification
+was used (that is we train the model n-times, once on each digit).
 \begin{itemize}
 \item Linear kernel: $K(x_i,x_j) = \langle x_i, x_j \rangle$
 \item Polynomial kernel: $K(x_i,x_j) = (\gamma \langle x_i, x_j \rangle + r)^p$, $\gamma$ is a parameter that needs to be found and we decided to keep $r=0$ and we used $p=4$.
 \item RBF kernel:  $K(x_i,x_j) = \exp(-\gamma|x_i-x_j|^2)$, $\gamma$ is a parameter that needs to be found.
 \end{itemize} 
 
-The most important result is the correctness of the prediction. To do this, we take the number of correct prediction and we divide it by the length of the dataset. This gives us a percentage on the correctness of the model. We give in Table \ref{tab:correct} the results for each of the kernels.
+The most important result is the correctness of the prediction. To do this, we
+take the number of correct prediction and we divide it by the length of the
+dataset. This gives us a percentage on the correctness of the model. We give in
+Table \ref{tab:correct} the results for each of the kernels.
 
 \begin{table}[H]
 \centering
@@ -371,7 +386,16 @@ RBF & 98.56 \% \\
 \caption{\label{tab:correct} Percentage of correct prediction for each of the kernels.}
 \end{table}
 
-As we can see, the best kernel is the RBF one. It has already been shown in the literature that this kernel is the state-of-the-art in SVM. Another important aspect is to have a look at the predictions more precisely. For this, we use a confusion matrix. This matrix shows the labels (vertical axis) in function of the predictions (horizontal axis). It is interesting to have a look at this matrix to see if there is some bias. (For example, 1 can be often predicted as 7). The confusion matrix for the RBF kernel is given in Table \ref{tab:conf_mat}. As we can see in this table, we don't have any bias. We just show some wrong predictions in Figure \ref{fig:wrong-label}. This figure shows us that some of the images are difficult to label, even for us.
+As we can see, the best kernel is the RBF one. It has already been shown in the
+literature that this kernel is the state-of-the-art in SVM. Another important
+aspect is to have a look at the predictions more precisely. For this, we use a
+confusion matrix. This matrix shows the labels (vertical axis) in function of
+the predictions (horizontal axis). It is interesting to have a look at this
+matrix to see if there is some bias. (For example, 1 can be often predicted as
+7). The confusion matrix for the RBF kernel is given in Table
+\ref{tab:conf_mat}. As we can see in this table, we don't have any bias. We
+just show some wrong predictions in Figure \ref{fig:wrong-label}. This figure
+shows us that some of the images are difficult to label, even for us.
 
 
 \begin{table}[h]
@@ -403,7 +427,26 @@ As we can see, the best kernel is the RBF one. It has already been shown in the 
 
 \section{Conclusion}
 
-Within this project, we explored a really interesting topic. Indeed, Machine Learning as well as Artificial Intelligence is today's future technology. A lot of start-ups are working on this and applying it to a lot of different fields such as Facial and Emotion Recognition, Language Recognition, Data Mining, etc. Until not so long ago, the SVM were the state-of-the-art. Now, Random Forests and Deep-Learning (Convolutional Neural Networks) are better than this method. But their underlying theory is sometimes not totally understood compared to the SVM. Indeed, Convex Optimization is very known field by many scientist. Developing a model using Convex Optimization to make the computer learn things, such as handwritten digits, is quite amazing.
+Kernel methods remain methods of interest, most notably in machine learning,
+since they provide both a satisfactory theoretical background, as well as
+some good results in a large variety of fields. One thing that might be worth
+noticing is that they have a quadratic complexity in the number of data-entries
+in the train dataset (we need to be able to compute the whole kernel, which is
+of dimension $n \times n$ where $n$ is the number of train datapoints), making
+them hardly applicable for very large datasets.
+
+This might partly explain the recent arising of deep learning methods, which
+are much less theoretically grounded, and among other ill-understood properties,
+perform well while not achieving global optimality, but keep a linear complexity
+in the number of datapoints, both at train and at test time (even if it might argued
+that the train time probably doesn't scale linearly in the number of training samples).
+
+Kernel methods remain useful baselines when considering small datasets, as
+they remain computationnally tractable, and furthermore
+provide a natural regularization, that tends to reduce efficiently overfitting.
+Besides, neural networks tend to perform quite poorly in those cases where only 
+few datapoints are available as they tend to overfit rapidly, even though recent
+researches tend to bridge the gap.
 
 \begin{thebibliography}{1}
 
