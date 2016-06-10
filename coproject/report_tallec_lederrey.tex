@@ -53,8 +53,8 @@
 \paperheight=297mm
 \paperwidth=210mm
 
-\setlength{\textheight}{235mm}
-\setlength{\topmargin}{-1.2cm} % pour centrer la page verticalement
+\setlength{\textheight}{240mm}
+\setlength{\topmargin}{-1.5cm} % pour centrer la page verticalement
 %\setlength{\footskip}{5mm}
 \setlength{\textwidth}{15cm}
 \setlength{\oddsidemargin}{0.56cm}
@@ -363,6 +363,7 @@ predicted labels against the real labels. In order to test the SVM method, we
 trained the algorithm with different kernel functions. As SVMs naturally perform
 binary classification, and not $n$-ary classification, one-vs-all classification
 was used (that is we train the model n-times, once on each digit).
+\newpage
 \begin{itemize}
 \item Linear kernel: $K(x_i,x_j) = \langle x_i, x_j \rangle$
 \item Polynomial kernel: $K(x_i,x_j) = (\gamma \langle x_i, x_j \rangle + r)^p$, $\gamma$ is a parameter that needs to be found and we decided to keep $r=0$ and we used $p=4$.
@@ -419,6 +420,7 @@ shows us that some of the images are difficult to label, even for us.
 \caption{\label{tab:conf_mat} Confusion Matrix for the RBF kernel.}
 \end{table}
 
+
 \begin{figure}[H]
 \centering
 \input{./figures/wrong-label.tex}
@@ -452,7 +454,7 @@ researches tend to bridge the gap.
 
 \bibitem{course} \href{http://lear.inrialpes.fr/people/mairal/teaching/2015-2016/MVA/fichiers/mva_slides.pdf}{Slides of the course on "{\it Kernel Methods for Machine Learning}", Inria, Grenoble, France}
 
-\bibitem{paper} Kim, Seung-Jean, et al. "Learning the kernel via convex optimization." {\it Acoustics, Speech and Signal Processing, 2008. ICASSP 2008. IEEE International Conference on.} IEEE, 2008.
+\bibitem{paper} Kim, Seung-Jean, et al. "Learning the kernel via convex optimization." {\it Acoustics, Speech and Signal Processing, ICASSP.} IEEE, 2008.
 
 \bibitem{svm} \href{https://en.wikipedia.org/wiki/Support_vector_machine}{Wikip\'edia - Support Vector Machine}
 
